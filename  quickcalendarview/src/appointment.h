@@ -31,49 +31,45 @@
 
 class Calendar;
 
-/*!
-    \class Appointment
-    \brief Class to hold data for appointments.
-*/
-
-class Appointment //<Базовый класс для хранения информации о встречах
+///Базовый класс для хранения информации о встречах
+class Appointment 
 {
 public:
 	///Пустой конструктор, инициализация полей myKey и ptrCalendar 0
     Appointment() : myKey(0), ptrCalendar(0) {}
-    ~Appointment() {} //<Пустой деструктор
+    ~Appointment() {} ///<Пустой деструктор
 
-    int key() const {return myKey;} //<Метод чтения поля ключ
-    void setKey(int key) {myKey = key;} //<Метод записи поля ключ
+    int key() const {return myKey;} ///<Метод чтения поля ключ
+    void setKey(int key) {myKey = key;} ///<Метод записи поля ключ
 
-    int calendarKey() const {return myCalendarKey;} //<Метод чтения поля myCalendarKey
-    void setCalendarKey(int calendarKey) {myCalendarKey = calendarKey;} //<Метод записи поля myCalendarKey
+    int calendarKey() const {return myCalendarKey;} ///<Метод чтения поля myCalendarKey
+    void setCalendarKey(int calendarKey) {myCalendarKey = calendarKey;} ///<Метод записи поля myCalendarKey
 
-    Calendar* calendar() const {return ptrCalendar;} //<Метод чтения указателя на календарь
-    void setCalendar(Calendar *calendar) {ptrCalendar = calendar;} //<Метод записи указателя на календарь
+    Calendar* calendar() const {return ptrCalendar;} ///<Метод чтения указателя на календарь
+    void setCalendar(Calendar *calendar) {ptrCalendar = calendar;} ///<Метод записи указателя на календарь
 
-    QString subject() const {return mySubject;} //<Метод чтения поля mySubject
-    void setSubject(const QString &subject) {mySubject = subject;} //<Метод записи поля mySubject
+    QString subject() const {return mySubject;} ///<Метод чтения поля mySubject
+    void setSubject(const QString &subject) {mySubject = subject;} ///<Метод записи поля mySubject
 
-    QString place() const {return myPlace;} //<Метод чтения места встречи
-	void setPlace(const QString &place) {myPlace = place;} //<Метод записи места встречи
+    QString place() const {return myPlace;} ///<Метод чтения места встречи
+	void setPlace(const QString &place) {myPlace = place;} ///<Метод записи места встречи
 
-    QString description() const {return myDescription;} //<Метод чтения описания
-    void setDescription(const QString &description) {myDescription = description;} //<Метод установки описания
+    QString description() const {return myDescription;} ///<Метод чтения описания
+    void setDescription(const QString &description) {myDescription = description;} ///<Метод установки описания
 
-    QTime startTime() const { return myStartDateTime.time(); } //<Метод чтения времени начала встречи
-    QDate startDate() const { return myStartDateTime.date(); } //<Метод чтения даты начала встречи
-    QDateTime startDateTime() const {return myStartDateTime;} //<Метод чтения даты и времени начала встречи
-    void setStartDateTime(const QDateTime &startDateTime); //<Метод записи даты и времени начала встречи
+    QTime startTime() const { return myStartDateTime.time(); } ///<Метод чтения времени начала встречи
+    QDate startDate() const { return myStartDateTime.date(); } ///<Метод чтения даты начала встречи
+    QDateTime startDateTime() const {return myStartDateTime;} ///<Метод чтения даты и времени начала встречи
+    void setStartDateTime(const QDateTime &startDateTime); ///<Метод записи даты и времени начала встречи
 
-    QTime endTime() const { return myEndDateTime.time(); } //<Метод чтения времени окончания встречи
-    QDate endDate() const { return myEndDateTime.date(); } //<Метод чтения даты окончания встречи
-    QDateTime endDateTime() const {return myEndDateTime; } //<Метод чтения даты и времени окончания встречи
-    void setEndDateTime(const QDateTime &endDateTime); //<Метод записи даты и времени окончания встречи
+    QTime endTime() const { return myEndDateTime.time(); } ///<Метод чтения времени окончания встречи
+    QDate endDate() const { return myEndDateTime.date(); } ///<Метод чтения даты окончания встречи
+    QDateTime endDateTime() const {return myEndDateTime; } ///<Метод чтения даты и времени окончания встречи
+    void setEndDateTime(const QDateTime &endDateTime); ///<Метод записи даты и времени окончания встречи
 
-	///Метод установки даты и времени начала и окончания встречи: startDateTime - момент начала, endDateTime - окончания
+	///Метод установки даты и времени начала и окончания встречи.
     void setDateTimes(const QDateTime &startDateTime, const QDateTime &endDateTime);
-	///Метод установки времени начала и окончания встречи: startTime - время начала, endTime - окончания
+	///Метод установки времени начала и окончания встречи
     void setTimes(const QTime &startTime, const QTime &endTime); 
 
 	///Метод вернет номер четверти часа, в которой начнентся встреча
@@ -84,24 +80,24 @@ public:
 	///Метод вернет true, если встреча app1 начнется раньше app2
     static bool before(Appointment *app1, Appointment *app2);
 
-    bool operator==(const Appointment &other) const; //<Оператор ==
-    bool operator!=(const Appointment &other) const; //<Оператор !=
-    bool operator<(const Appointment &other) const; //<Оператор <
+    bool operator==(const Appointment &other) const; ///<Оператор ==
+    bool operator!=(const Appointment &other) const; ///<Оператор !=
+    bool operator<(const Appointment &other) const; ///<Оператор <
 
 private:
-    int myKey; //<Ключ. Равен 0, если встреча не принадлежит календарю. Иначе содержит порядковый номер.
-    int myCalendarKey; //<Еще один ключ. Нигде не используется.
+    int myKey; ///<Ключ. Равен 0, если встреча не принадлежит календарю. Иначе содержит порядковый номер.
+    int myCalendarKey; ///<Еще один ключ. Нигде не используется.
 
-    Calendar *ptrCalendar; //<Указатель на календарь, которому принадлежит встреча
+    Calendar *ptrCalendar; ///<Указатель на календарь, которому принадлежит встреча
 
-    QString mySubject; //<Тема встречи или человек, с которым назначена встреча.
-    QString myPlace; //<Место встречи
-    QString myDescription;//<Описание встречи
+    QString mySubject; ///<Тема встречи или человек, с которым назначена встреча.
+    QString myPlace; ///<Место встречи
+    QString myDescription;///<Описание встречи
 
-    QDateTime myStartDateTime; //<Дата и время начала встречи
-    QDateTime myEndDateTime;   //<Дата и время окончания встречи
+    QDateTime myStartDateTime; ///<Дата и время начала встречи
+    QDateTime myEndDateTime;   ///<Дата и время окончания встречи
 };
 
-Q_DECLARE_METATYPE(Appointment) //<Объявление мета-класса
+Q_DECLARE_METATYPE(Appointment) ///<Объявление мета-класса
 
 #endif

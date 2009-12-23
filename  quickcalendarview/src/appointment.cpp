@@ -22,7 +22,9 @@
 
 #include "appointment.h"
 
-///Метод установки даты и времени начала и окончания встречи: startDateTime - момент начала, endDateTime - окончания
+/*!
+   startDateTime - момент начала, endDateTime - окончания
+*/
 void Appointment::setDateTimes(const QDateTime &startDateTime, const QDateTime &endDateTime)
 {
     if(startDateTime <= endDateTime) //Если момент начала раньше момента окончания
@@ -32,11 +34,12 @@ void Appointment::setDateTimes(const QDateTime &startDateTime, const QDateTime &
     }
     else //иначе
     {
-        myEndDateTime = myStartDateTime = startDateTime; //Установить момент начала и окночания равными
+        myEndDateTime = myStartDateTime = startDateTime; //Установить момент начала и окончания равными
     }
 }
-
-///Метод установки времени начала и окончания встречи: startTime - время начала, endTime - окончания
+/*!
+   startTime - время начала, endTime - время окончания
+*/
 void Appointment::setTimes(const QTime &startTime, const QTime &endTime)
 {
     if(startTime <= endTime) //Если время начала раньше времени окончания
@@ -52,92 +55,98 @@ void Appointment::setTimes(const QTime &startTime, const QTime &endTime)
 }
 
 /*!
-    Sets start date and time.
+    Устанавливает дату и время начала встречи.
 */
 void Appointment::setStartDateTime(const QDateTime &startDateTime)
 {
-    if(startDateTime <= myEndDateTime)
+    if(startDateTime <= myEndDateTime) //Если момент начала встречи раньше момента ее окончания
     {
-        myStartDateTime = startDateTime;
-    }else
+        myStartDateTime = startDateTime; //Установить момент начала встречи
+    }else //иначе
     {
-        myStartDateTime = myEndDateTime;
+        myStartDateTime = myEndDateTime; //Установить момент начала встречи равный моменту ее окончания
     }
 }
 
 /*!
-    Sets end and end date and time.
+    Устанавливает дату и время окончания встречи.
 */
 void Appointment::setEndDateTime(const QDateTime &endDateTime)
 {
-    if(endDateTime >= myStartDateTime)
+    if(endDateTime >= myStartDateTime) //Если момент начала встречи раньше момента ее окончания
     {
-        myEndDateTime = endDateTime;
-    }else
+        myEndDateTime = endDateTime; //Установить момент конца встречи
+    }else //Иначе
     {
-        myEndDateTime = myStartDateTime;
+        myEndDateTime = myStartDateTime; //Установить момент окончания равный моменту начала встречи
     }
 }
 
 /*!
-    Gets number of quarter when appointment starts.
+    Если date равна дате начала встречи, метод вернет номер четверти часа, в которой начнется встреча
+    Если date меньше чем дата окончания встречи, функция вернет 0
+	Иначе -1
 */
 int Appointment::startQuater(const QDate &date) const
 {
-    QTime time = myStartDateTime.time();
+    QTime time = myStartDateTime.time(); //Запомним время начала
 
-    if(date == myStartDateTime.date())
-        return ((time.hour() * 60) + time.minute()) / 15;
-    else if(date <= myEndDateTime.date())
-        return 0;
+    if(date == myStartDateTime.date()) //Если date равна дате начала
+        return ((time.hour() * 60) + time.minute()) / 15; //Вернем количество четвертей
+    else if(date <= myEndDateTime.date()) //Иначе, если date меньше даты окончания
+        return 0; //вернем 0
     else
-        return -1;
+        return -1; //Иначе вернем -1
 }
 
 /*!
-    Gets number of quarter when appointment ends.
+    Если date равна дате начала встречи, метод вернет номер четверти часа, в которой начнется встреча
+    Если date меньше чем дата окончания встречи, функция вернет 0
+	Иначе -1
 */
 int Appointment::endQuater(const QDate &date) const
 {
-    QTime time = myEndDateTime.time();
+    QTime time = myEndDateTime.time(); ////Запомним время окончания
 
-    if(date == myEndDateTime.date())
-        return ((time.hour() * 60) + time.minute()) / 15;
-    else if(myEndDateTime.date() > date)
-        return (24 * 60) / 15;
+    if(date == myEndDateTime.date()) //Если date равна дате окончания
+        return ((time.hour() * 60) + time.minute()) / 15; //Вернем количество четвертей
+    else if(myEndDateTime.date() > date) //Иначе, если date меньше даты окончания
+        return (24 * 60) / 15; //Вернем количество четвертей часа в сутках
     else
-        return -1;
+        return -1; //Иначе -1.
 }
 
 bool Appointment::before(Appointment *app1, Appointment *app2)
 {
-    return app1->startDateTime() < app2->startDateTime();
+    return app1->startDateTime() < app2->startDateTime(); //Сравниваем время начала встреч
 }
 
 /*!
-    Compares appointments by key values.
+    Сравнивает встречи по ключу
 */
 bool Appointment::operator==(const Appointment &other) const {
-    if(this == &other)
+    if(this == &other) //сравниваем адреса
         return true;
-    else if(other.myKey == myKey)
+    else if(other.myKey == myKey) //иначе сравниваем ключи
         return true;
     else
         return false;
 }
 
 /*!
-    Compares appointments by key values.
+    Сравнивает встречи по ключу
 */
 bool Appointment::operator!=(const Appointment &other) const {
-    return !(*this == other);
+    return !(*this == other); //Инверсия равенства
 }
 
-
+/*!
+  Сравнивает встречи по времени их начала
+*/
 bool Appointment::operator<(const Appointment &other) const {
-    if(this == &other)
+    if(this == &other) //Сравниваем указатели
         return false;
-    else if(other.myStartDateTime > myStartDateTime)
+    else if(other.myStartDateTime > myStartDateTime) //Сравниваем время начала встреч
         return true;
     else
         return false;
