@@ -27,10 +27,12 @@
 #include <QPainterPath>
 #include <QSizeF>
 
-/*!
-    Базовый класс для всех графических элементов календаря
-*/
 
+
+/**
+* @class CalendarItem
+* @brief Базовый класс для всех графических элементов календаря.
+*/ 
 class CalendarItem : public QGraphicsItem
 {
 

@@ -22,8 +22,9 @@
 
 #include "appointment.h"
 
-/*!
-   startDateTime - момент начала, endDateTime - окончания.
+/**
+* @param startDateTime - момент начала.
+* @param endDateTime - момент окончания.
 */
 void Appointment::setDateTimes(const QDateTime &startDateTime, const QDateTime &endDateTime)
 {
@@ -37,8 +38,9 @@ void Appointment::setDateTimes(const QDateTime &startDateTime, const QDateTime &
         myEndDateTime = myStartDateTime = startDateTime; //Установить момент начала и окончания равными
     }
 }
-/*!
-   startTime - время начала, endTime - время окончания.
+/**
+* @param startTime - время начала.
+* @param endTime - время окончания.
 */
 void Appointment::setTimes(const QTime &startTime, const QTime &endTime)
 {
@@ -55,7 +57,8 @@ void Appointment::setTimes(const QTime &startTime, const QTime &endTime)
 }
 
 /*!
-    Устанавливает дату и время начала встречи.
+* Устанавливает дату и время начала встречи.
+* @param startDateTime - момент начала встречи.
 */
 void Appointment::setStartDateTime(const QDateTime &startDateTime)
 {
@@ -68,8 +71,9 @@ void Appointment::setStartDateTime(const QDateTime &startDateTime)
     }
 }
 
-/*!
-    Устанавливает дату и время окончания встречи.
+/**
+  Устанавливает дату и время окончания встречи.
+* @param endDateTime - момент окончания встречи.
 */
 void Appointment::setEndDateTime(const QDateTime &endDateTime)
 {
@@ -115,6 +119,7 @@ int Appointment::endQuater(const QDate &date) const
     else
         return -1; //Иначе -1.
 }
+
 
 bool Appointment::before(Appointment *app1, Appointment *app2)
 {

@@ -23,8 +23,9 @@
 #include <QtGui>
 #include "calendaritem.h"
 
-/*!
-    parent - Указатель на родителя, scene - указатель на сцену.
+/**
+* @param parent -  указатель на родителя.
+* @param scene - указатель на сцену.
 */
 CalendarItem::CalendarItem(QGraphicsItem *parent,
                            QGraphicsScene *scene) :
@@ -32,6 +33,9 @@ CalendarItem::CalendarItem(QGraphicsItem *parent,
 {
 }
 
+/**
+* @return контейнер операций рисования.
+*/
 QPainterPath CalendarItem::shape () const
 {
     QPainterPath result; //Создаем контейнер операций рисования
@@ -39,10 +43,10 @@ QPainterPath CalendarItem::shape () const
     return result; //Возвращаем результат
 }
 
-/*!
-   painter - указатель на класс рисования QPainter, 
-   option - указатель на класс, содержащий параметры рисования,
-   widget - указатель на виджет.
+/**
+* @param painter - указатель на класс рисования QPainter.
+* @param option - указатель на класс, содержащий параметры рисования.
+* @param widget - указатель на виджет.
 */
 void CalendarItem::paint(QPainter *painter,
     const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -51,14 +55,15 @@ void CalendarItem::paint(QPainter *painter,
 //    painter->drawRect(0,0,myBoundingRect.width(),myBoundingRect.height());
 }
 
-
+/**
+* @return размер области для рисования.
+*/
 QRectF CalendarItem::boundingRect() const
 {
     return myBoundingRect; //Вернуть размер
 }
-
-/*!
-    size - устанавливаемый размер.
+/**
+* @param size - устанавливаемый размер.
 */
 void CalendarItem::setSize(const QSize &size)
 {
@@ -74,8 +79,9 @@ void CalendarItem::setSize(const QSize &size)
     }
 }
 
-/*!
-    width - устанавливаемая ширина, height - устанавливаемая высота
+/**
+* @param width - устанавливаемая ширина.
+* @param height - устанавливаемая высота.
 */
 void CalendarItem::setSize(qreal width, qreal height)
 {
@@ -91,8 +97,10 @@ void CalendarItem::setSize(qreal width, qreal height)
     }
 }
 
-/*!
-    Реализация по умолчанию не требуется.
+/**
+* Реализация по умолчанию не требуется.
+* @param size - новый размер.
+* @param oldSize - старый размер.
 */
 void CalendarItem::onResize(const QSizeF &size, const QSizeF &oldSize)
 {
