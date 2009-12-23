@@ -31,7 +31,10 @@
 
 class Calendar;
 
-///Базовый класс для хранения информации о встречах
+/**
+* @class CalendarItem
+* @brief Базовый класс для хранения информации о встречах
+*/ 
 class Appointment 
 {
 public:
@@ -85,7 +88,7 @@ public:
     bool operator<(const Appointment &other) const; ///<Оператор <
 
 private:
-    int myKey; ///<Ключ. Равен 0, если встреча не принадлежит календарю. Иначе содержит порядковый номер.
+    int myKey; ///<Ключ.
     int myCalendarKey; ///<Еще один ключ. Нигде не используется.
 
     Calendar *ptrCalendar; ///<Указатель на календарь, которому принадлежит встреча
