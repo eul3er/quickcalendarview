@@ -24,26 +24,25 @@
 #include "calendaritem.h"
 
 /*!
-    Constructor
+    parent - Указатель на родителя, scene - указатель на сцену.
 */
 CalendarItem::CalendarItem(QGraphicsItem *parent,
                            QGraphicsScene *scene) :
-    QGraphicsItem(parent, scene)
+    QGraphicsItem(parent, scene) //Вызов конструктора базового класса
 {
 }
 
-/*!
-    Returns shape of calendar item.
-*/
 QPainterPath CalendarItem::shape () const
 {
-    QPainterPath result;
-    result.addRect(myBoundingRect);
-    return result;
+    QPainterPath result; //Создаем контейнер операций рисования
+    result.addRect(myBoundingRect); //Добавляем в него прямоугольник
+    return result; //Возвращаем результат
 }
 
 /*!
-    Paints calendar item.
+   painter - указатель на класс рисования QPainter, 
+   option - указатель на класс, содержащий параметры рисования,
+   widget - указатель на виджет.
 */
 void CalendarItem::paint(QPainter *painter,
     const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -52,64 +51,62 @@ void CalendarItem::paint(QPainter *painter,
 //    painter->drawRect(0,0,myBoundingRect.width(),myBoundingRect.height());
 }
 
-/*!
-    Returns boundingRect
-*/
+
 QRectF CalendarItem::boundingRect() const
 {
-    return myBoundingRect;
+    return myBoundingRect; //Вернуть размер
 }
 
 /*!
-    Установка размера через QSize
+    size - устанавливаемый размер.
 */
 void CalendarItem::setSize(const QSize &size)
 {
         if(size.width() != myBoundingRect.width() ||
-           size.height() != myBoundingRect.height())
+           size.height() != myBoundingRect.height()) //если новый размер отличен от текущего
     {
-        prepareGeometryChange();
-        QSizeF old = myBoundingRect.size();
-        myBoundingRect.setWidth(size.width());
-        myBoundingRect.setHeight(size.height());
-        onResize(size, old);
-        update();
+        prepareGeometryChange(); //Подготавливаем элемент для смены геометрии.
+        QSizeF old = myBoundingRect.size(); //Запоминаем старый размер
+        myBoundingRect.setWidth(size.width()); //устанавливаем новую ширину
+        myBoundingRect.setHeight(size.height()); //и высоту
+        onResize(size, old); //Вызваем обработчик перерисовки
+        update(); //перерисовка области элемента
     }
 }
 
 /*!
-    Установка размера элемента через высоту и ширину
+    width - устанавливаемая ширина, height - устанавливаемая высота
 */
 void CalendarItem::setSize(qreal width, qreal height)
 {
     if(width != myBoundingRect.width() || height != myBoundingRect.height())
     {
-        prepareGeometryChange();
-        QSizeF old = myBoundingRect.size();
-        QSizeF size(width, height);
-        myBoundingRect.setWidth(width);
-        myBoundingRect.setHeight(height);
-        onResize(size, old);
-        update();
+        prepareGeometryChange(); //Подготавливаем элемент для смены геометрии.
+        QSizeF old = myBoundingRect.size();//Запоминаем старый размер
+        QSizeF size(width, height); //Новый размер
+        myBoundingRect.setWidth(width); //устанавливаем новую ширину
+        myBoundingRect.setHeight(height); //и высоту
+        onResize(size, old); //Взываем обработчик перерисовки
+        update(); //перерисовка области элемента
     }
 }
 
 /*!
-    Handles resize event. Default implementation does nothing.
+    Реализация по умолчанию не требуется.
 */
 void CalendarItem::onResize(const QSizeF &size, const QSizeF &oldSize)
 {
 }
 
 /*!
-    Validates layout. Default implementation does nothing.
+    Реализация по умолчанию не требуется.
 */
 void CalendarItem::layoutChanged()
 {
 }
 
 /*!
-    Handles dataChanged event. Default implementation does nothing.
+    Реализация по умолчанию не требуется.
 */
 void CalendarItem::dataChanged()
 {
