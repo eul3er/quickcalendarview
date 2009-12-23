@@ -23,8 +23,9 @@
 #include "calendar.h"
 
 /*!
-    Compares calendars by key values.
+	Сравнивает календари по значениям ключей
 */
+	//Compares calendars by key values.
 bool Calendar::operator==(const Calendar &other) const {
     if(this == &other)
         return true;
@@ -35,8 +36,9 @@ bool Calendar::operator==(const Calendar &other) const {
 }
 
 /*!
-    Compares calendars by key values.
+	Сравнивает календари по значениями ключей
 */
+    //Compares calendars by key values.
 bool Calendar::operator!=(const Calendar &other) const {
     return !(*this == other);
 }
@@ -59,16 +61,29 @@ QList <Appointment *> Calendar::getAppointments(const QDate &date)
     }
     return result;
 }
-
+/**
+*	@return Возращает false если встреча уже есть в календаре, иначе true
+*/
 bool Calendar::insertAppointment(Appointment *appointment)
 {
+	/**
+		Если у данной встречи не установлен ключ, то метод
+		задает ключ по счетчику календаря и
+		для встречи установливает данный календарь как родительский 
+		(так как, одна и таже встреча не может быть в разных календарях).
+	*/
     if(appointment->key() == 0)
     {
+
         appointment->setKey(myCounter);
+
         appointment->setCalendar(this);
         myCounter++;
     }
-
+	
+	/**
+		Если встречи с заданным ключем еще нет, добавляет её в конец календаря.
+	*/
     if(!myAppointments.contains(appointment))
     {
         myAppointments.append(appointment);
@@ -78,6 +93,11 @@ bool Calendar::insertAppointment(Appointment *appointment)
     return false;
 }
 
+/**
+*	@brief Метод обновления данных о встречи в календаре.
+*	@param appointment Ссылка на данные встречи, которые нужно записать на место старых, соотвествующая встреча определяется по ключу.
+*	@return Всегда возращает false
+*/
 bool Calendar::updateAppointment(const Appointment &appointment)
 {
 //    if(!ptrAppointments->contains(appointment))

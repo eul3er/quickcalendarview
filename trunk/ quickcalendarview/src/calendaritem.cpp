@@ -61,7 +61,7 @@ QRectF CalendarItem::boundingRect() const
 }
 
 /*!
-    Sets size.
+    Установка размера через QSize
 */
 void CalendarItem::setSize(const QSize &size)
 {
@@ -78,7 +78,7 @@ void CalendarItem::setSize(const QSize &size)
 }
 
 /*!
-    Sets size.
+    Установка размера элемента через высоту и ширину
 */
 void CalendarItem::setSize(qreal width, qreal height)
 {

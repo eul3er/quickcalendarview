@@ -40,14 +40,14 @@ public:
     Calendar(int key) : mySelected(false), myColor(255,0,0), myCounter(0) { myKey = key; }
     ~Calendar() { qDeleteAll(myAppointments); }
 
-    int key() const {return myKey;}		///<Метод чтения поля ключ
-    void setKey(int key) {myKey = key;}	///<Метод записи поля ключ
+    int key() const {return myKey;}		///<Метод чтения ключа
+    void setKey(int key) {myKey = key;}	///<Метод записи ключа
 
-    QString name() const {return myName;}				///<Метод чтения поля имени
-    void setName(const QString &name) {myName = name;}	///<Метод записи поля имени
+    QString name() const {return myName;}				///<Метод чтения имени
+    void setName(const QString &name) {myName = name;}	///<Метод записи имени
 
-    QString description() const {return myDescription;}	///<Метод чтения поля описания
-    void setDescription(const QString &description) {myDescription = description;}	///<Метод чтения поля описания
+    QString description() const {return myDescription;}	///<Метод чтения описания
+    void setDescription(const QString &description) {myDescription = description;}	///<Метод установки описания
 
     bool isSelected() const { return mySelected; }				///<Возращает  статус выбора текущего календаря
     void setSelected(bool selected) { mySelected = selected; }	///<Установить статус выбора текущего календаря
@@ -55,7 +55,12 @@ public:
     QColor color() const { return myColor; }					///<Получить цвет календаря
     void setColor(const QColor &color) { myColor = color; }		///<Задать цвет для календаря
 
-    QList <Appointment *> getAppointments(const QDate &date);	///<Получить список встреч на выбранное число
+	/**
+	* Получить список встреч на выбранное число
+	* @param date Дата встречи в формате QDate.
+	* @return Список встреч QList <Appointment *>
+	*/
+    QList <Appointment *> getAppointments(const QDate &date);
     bool insertAppointment(Appointment *appointment);			///<Добавить встречу
     bool updateAppointment(const Appointment &appointment);		///<Обновить данные о встрече
     bool removeAppointment(Appointment *appointment);			///<Удалить встречу
