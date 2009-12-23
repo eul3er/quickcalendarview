@@ -6,9 +6,9 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = QuickCalendarView
 PROJECT_NUMBER         = 1.0
-OUTPUT_DIRECTORY       = D:/files/Work_NRI/QuickCalendarView/doc
+OUTPUT_DIRECTORY       = .
 CREATE_SUBDIRS         = NO
-OUTPUT_LANGUAGE        = English
+OUTPUT_LANGUAGE        = Russian
 BRIEF_MEMBER_DESC      = YES
 REPEAT_BRIEF           = YES
 ABBREVIATE_BRIEF       = "The $name class" \
@@ -94,7 +94,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = D:/files/Work_NRI/QuickCalendarView/src
+INPUT                  = ../src
 INPUT_ENCODING         = CP1251
 FILE_PATTERNS          = *.c \
                          *.cc \
