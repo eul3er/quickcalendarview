@@ -28,10 +28,15 @@
 
 #include <QSize>
 
+/**
+* @class ClockBar
+* @brief Класс для отображения списка часов от 0-00 до 23-00
+*/ 
 class ClockBar : public CalendarItem
 {
 
 public:
+	///Конструктор
     ClockBar(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                 QWidget *widget);

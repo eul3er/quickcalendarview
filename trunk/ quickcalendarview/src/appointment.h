@@ -32,7 +32,7 @@
 class Calendar;
 
 /**
-* @class CalendarItem
+* @class Appointment
 * @brief Базовый класс для хранения информации о встречах
 */ 
 class Appointment 
