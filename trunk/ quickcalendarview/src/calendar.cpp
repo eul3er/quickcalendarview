@@ -61,9 +61,6 @@ QList <Appointment *> Calendar::getAppointments(const QDate &date)
     }
     return result;
 }
-/**
-*	@return Возращает false если встреча уже есть в календаре, иначе true
-*/
 bool Calendar::insertAppointment(Appointment *appointment)
 {
 	/**
@@ -89,15 +86,12 @@ bool Calendar::insertAppointment(Appointment *appointment)
         myAppointments.append(appointment);
         return true;
     }
-
+	/**
+	*	@return Возращает false если встреча уже есть в календаре, иначе true
+	*/
     return false;
 }
 
-/**
-*	@brief Метод обновления данных о встречи в календаре.
-*	@param appointment Ссылка на данные встречи, которые нужно записать на место старых, соотвествующая встреча определяется по ключу.
-*	@return Всегда возращает false
-*/
 bool Calendar::updateAppointment(const Appointment &appointment)
 {
 //    if(!ptrAppointments->contains(appointment))

@@ -29,11 +29,11 @@
 #include <QString>
 
 #include "appointment.h"
-/*!
-    \class Calendar
-    \brief Класс для хранения данных календарей.
-*/
 
+/**
+ @class Calendar
+ @brief Класс для хранения данных календарей.
+*/
 class Calendar
 {
 public:
@@ -55,18 +55,23 @@ public:
     QColor color() const { return myColor; }					///<Получить цвет календаря
     void setColor(const QColor &color) { myColor = color; }		///<Задать цвет для календаря
 
-	/**
-	* Получить список встреч на выбранное число
-	* @param date Дата встречи в формате QDate.
-	* @return Список встреч QList <Appointment *>
-	*/
+/**
+*	Получить список встреч на выбранное число.
+*	@param date Дата встречи в формате QDate.
+*	@return Список встреч QList <Appointment *>
+*/
     QList <Appointment *> getAppointments(const QDate &date);
     bool insertAppointment(Appointment *appointment);			///<Добавить встречу
-    bool updateAppointment(const Appointment &appointment);		///<Обновить данные о встрече
+/**
+*	@brief Метод обновления данных о встречи в календаре.
+*	@param appointment Ссылка на данные встречи, которые нужно записать на место старых, соотвествующая встреча определяется по ключу.
+*	@return Всегда возращает false
+*/
+    bool updateAppointment(const Appointment &appointment);
     bool removeAppointment(Appointment *appointment);			///<Удалить встречу
 
     bool operator==(const Calendar &other) const;				///<Булевый оператор сравнения с другим календарем
-    bool operator!=(const Calendar &other) const;				///<Белевый оператор неравенства с другим календарем
+    bool operator!=(const Calendar &other) const;				///<Булевый оператор неравенства с другим календарем
 private:
     int myKey;	///<Ключ индификатор календаря
 
