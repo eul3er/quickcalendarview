@@ -36,18 +36,37 @@
 
 class QuickCalendarView;
 
+/**
+ @class DayItem
+ @brief Класс для графического отображения информации о дне недели
+*/
 class DayItem : public CalendarItem
 {
 
 public:
+	/**
+	@brief Конструктор элемента отображения дня недели
+	@param calendar Родительский календарь для этого дня
+	@param date Дата, которой принадлежит день
+	@param parent Родильский графический элемент
+	@param scene Сцена для графического отображения
+	*/
     DayItem(QuickCalendarView *calendar,
             const QDate &date,
             QGraphicsItem *parent = 0,
             QGraphicsScene *scene = 0);
-
+	
+	/**
+	@brief Установка даты для дня
+	*/
     void setDate(const QDate &date);
     //void setWeekItem(
-
+	/**
+	@brief Метод отрисовки элемента для
+	@param painter Класс отрисовки базовых графических элементов в виджете
+	@param option Стиль отрисовки
+	@param widget ??
+	*/
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                 QWidget *widget);
 

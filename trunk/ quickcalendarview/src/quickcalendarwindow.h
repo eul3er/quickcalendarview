@@ -35,8 +35,27 @@
 #include "calendartablemodel.h"
 
 /**
-* @class QuickCalendarWindow
-* @brief Класс, реализующий главное окно виджета
+@class QuickCalendarWindow
+@brief Класс, реализующий главное окно виджета
+*/
+/**
+Пример использования:
+@code 
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+
+    QuickCalendarWindow *window = new QuickCalendarWindow();
+
+    window->setGeometry(100,100,800,600);
+    window->startUp();
+
+    return app.exec();
+}
+@endcode
+задаем положение на экране или на родительском виджете с помощью setGeometry(), есть добавить как дочерний виджет
+то положение будет задано в клиентской области родителя. startUp() инициализирует окно календаря - 
+создает основные компоненты окна, связывает основные сигналы и слоты.
 */ 
 class QuickCalendarWindow: public QMainWindow, public Ui::QuickCalendarWindow
 {
@@ -50,7 +69,7 @@ public:
     void startUp();
 
 protected:
-    void closeEvent(QCloseEvent *event); ///<Событие закртыия окна
+    void closeEvent(QCloseEvent *event); ///<Событие закрытия окна
     void createDockWidgets(); ///<Метод создает плавающий список календарей
 
 private slots: 
