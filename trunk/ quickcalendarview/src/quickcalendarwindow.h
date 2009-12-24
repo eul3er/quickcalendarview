@@ -34,36 +34,44 @@
 #include "calendar.h"
 #include "calendartablemodel.h"
 
+/**
+* @class QuickCalendarWindow
+* @brief Класс, реализующий главное окно виджета
+*/ 
 class QuickCalendarWindow: public QMainWindow, public Ui::QuickCalendarWindow
 {
     Q_OBJECT
 
 public:
+	///Конструктор
     QuickCalendarWindow();
 
+	///Метод создает основные компоненты окна, связывает основные сигналы и слоты
     void startUp();
 
 protected:
-    void closeEvent(QCloseEvent *event);
-    void createDockWidgets();
+    void closeEvent(QCloseEvent *event); ///<Событие закртыия окна
+    void createDockWidgets(); ///<Метод создает плавающий список календарей
 
-private slots:
-    void onExit();
+private slots: 
+    void onExit(); ///<Слот, вызываемый при закрытии выдижета
+	///Слот изменения списка выбранных календарей
     void dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
-    void modeChanged(int mode);
+    void modeChanged(int mode); //<Слот изменения режима
 
 private:
+	///Метод добавляет 4 календаря и несколько событий
     void generateData();
 
-    QList <QColor> myColors;
-    QList <QIcon> myIcons;
+    QList <QColor> myColors; ///<Вектор цветов
+    QList <QIcon> myIcons;   ///<Вектор иконок
 
-    QuickCalendarView *ptrCalendarView;
-    SelectorWidget *ptrSelectorWidget;
+    QuickCalendarView *ptrCalendarView; ///<Виджет календарь (таблица дней месяца)
+    SelectorWidget *ptrSelectorWidget; ///<Виджет выбора месяца
     QTableView *ptrTableView;
-    CalendarTableModel *ptrCalendarModel;
+    CalendarTableModel *ptrCalendarModel; ///<Модель календарей
 
-    QList <Calendar *> myCalendars;
+    QList <Calendar *> myCalendars; ///<Список календарей
 };
 
 #endif
