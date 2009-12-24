@@ -28,7 +28,7 @@
 
 QuickCalendarWindow::QuickCalendarWindow()
 {
-    setupUi(this);
+    setupUi(this); //Устанавливаем разаботанную в QT Desiner форму
 
     myColors << QColor(56, 128, 189)
     << QColor(249, 162, 57)
@@ -37,90 +37,92 @@ QuickCalendarWindow::QuickCalendarWindow()
     << QColor(165, 93, 38)
     << QColor(239, 71, 63)
     << QColor(132, 199, 112)
-    << QColor(0, 90, 157);
+    << QColor(0, 90, 157); //Формируем вектор цветов
 
-    QListIterator <QColor> i(myColors);
-    while(i.hasNext())
+    QListIterator <QColor> i(myColors); //Список итераторов
+    while(i.hasNext()) //Идем по списку
     {
-        QColor color = i.next();
-        QPixmap pixmap(24, 24);
-        pixmap.fill(color);
-        QIcon icon;
-        icon.addPixmap(pixmap);
-        myIcons.append(icon);
+        QColor color = i.next(); //Получаем цвет
+        QPixmap pixmap(24, 24); //Создаем изображение размером 24 на 24
+        pixmap.fill(color); //Заливаем его цветом
+        QIcon icon; //Создаем иконку
+        icon.addPixmap(pixmap); //Добавляем к ней изображение
+        myIcons.append(icon); //Добавляем иконку к вектору
     }
 
-    ptrCalendarModel = new CalendarTableModel();
-    ptrCalendarModel->setCalendars(&myCalendars);
+    ptrCalendarModel = new CalendarTableModel(); //Создаем модель календарей
+    ptrCalendarModel->setCalendars(&myCalendars); //Добавляем к ней список календарей
 
-    generateData();
+    generateData(); //Заполняем список календарей
 }
 
 void QuickCalendarWindow::generateData()
 {
     // Holiday calendar
 
-    Calendar *cal = new Calendar(0);
-    cal->setName("Holiday Calendar");
-    cal->setColor(myColors.at(0));
-    cal->setSelected(false);
-    myCalendars.append(cal);
+    Calendar *cal = new Calendar(0); //Создаем 0ой календарь
+    cal->setName("Holiday Calendar"); //Устанвливаем его имя
+    cal->setColor(myColors.at(0)); //Устанавливаем его цвет
+    cal->setSelected(false); //Устанавливаем статус выделения
+    myCalendars.append(cal); //Добавляем его к списку календарей
 
-    Appointment *app = new Appointment();
+    Appointment *app = new Appointment(); //Создаем новую встречу
     app->setDateTimes(QDateTime(QDate(2008,12,23),QTime(19,0,0)),
-                     QDateTime(QDate(2008,12,23),QTime(23,0,0)));
+                     QDateTime(QDate(2008,12,23),QTime(23,0,0))); //Период события
 
-    app->setSubject("Holiday party!");
-    app->setPlace("Secret place");
-    app->setDescription("Secret holiday party at secret place. Everybody is welcome!");
-    cal->insertAppointment(app);
+    app->setSubject("Holiday party!"); //Устанвливем субъект встречи
+    app->setPlace("Secret place"); //Устанавливаем место встречи
+    app->setDescription("Secret holiday party at secret place. Everybody is welcome!"); //Описание встречи
+    cal->insertAppointment(app); //Добавляем встречу к календарю
 
-    app = new Appointment();
+    app = new Appointment();//Создаем новую встречу
     app->setDateTimes(QDateTime(QDate(2008,12,24),QTime(12,0,0)),
-                     QDateTime(QDate(2008,12,24),QTime(23,59,0)));
+                     QDateTime(QDate(2008,12,24),QTime(23,59,0)));//Период события
 
-    app->setSubject("Christmas party!");
-    app->setPlace("Everywhere");
-    app->setDescription("Everybody is welcome!");
-    cal->insertAppointment(app);
+    app->setSubject("Christmas party!"); //Устанвливем субъект встречи
+    app->setPlace("Everywhere"); //Устанавливаем место встречи
+    app->setDescription("Everybody is welcome!"); //Описание встречи
+    cal->insertAppointment(app); //Добавляем встречу к календарю
 
     // Work Calendar
 
-    cal = new Calendar(1);
-    cal->setName("Work Calendar");
-    cal->setColor(myColors.at(1));
-    cal->setSelected(false);
-    myCalendars.append(cal);
+    cal = new Calendar(1);//Создаем 1ый календарь
+    cal->setName("Work Calendar");//Устанвливаем его имя
+    cal->setColor(myColors.at(1));//Устанавливаем его цвет
+    cal->setSelected(false);//Устанавливаем статус выделения
+    myCalendars.append(cal);//Добавляем его к списку календарей
 
-    app = new Appointment();
+    app = new Appointment(); //Создаем новую встречу
     app->setDateTimes(QDateTime(QDate(2008,12,22),QTime(9,0,0)),
-                     QDateTime(QDate(2008,12,22),QTime(11,00,0)));
-    app->setSubject("Meeting");
-    app->setPlace("Somewhere");
-    app->setDescription("Remember this meeting!");
-    cal->insertAppointment(app);
+                     QDateTime(QDate(2008,12,22),QTime(11,00,0)));//Период события
+    app->setSubject("Meeting"); //Устанвливем субъект встречи
+    app->setPlace("Somewhere"); //Устанавливаем место встречи
+    app->setDescription("Remember this meeting!"); //Описание встречи
+    cal->insertAppointment(app); //Добавляем встречу к календарю
 
-    app = new Appointment();
+    app = new Appointment(); //Создаем новую встречу
     app->setDateTimes(QDateTime(QDate(2008,12,22),QTime(11,00,0)),
-                     QDateTime(QDate(2008,12,22),QTime(12,30,0)));
-    app->setSubject("Lunch with Boss");
-    app->setPlace("Hilton");
-    app->setDescription("Good food.");
-    cal->insertAppointment(app);
+                     QDateTime(QDate(2008,12,22),QTime(12,30,0))); //Период события
+    app->setSubject("Lunch with Boss"); //Устанвливем субъект встречи
+    app->setPlace("Hilton"); //Устанавливаем место встречи
+    app->setDescription("Good food."); //Описание встречи
+    cal->insertAppointment(app); //Добавляем встречу к календарю
 
-    app = new Appointment();
+    app = new Appointment(); //Создаем новую встречу
     app->setDateTimes(QDateTime(QDate(2008,12,23),QTime(10,00,0)),
-                     QDateTime(QDate(2008,12,23),QTime(11,00,0)));
-    app->setSubject("Call to collegue");
-    cal->insertAppointment(app);
+                     QDateTime(QDate(2008,12,23),QTime(11,00,0))); //Период события
+    app->setSubject("Call to collegue"); //Устанвливем субъект встречи
+    cal->insertAppointment(app); //Добавляем встречу к календарю
 
     // QuickCalendar
 
-    cal = new Calendar(2);
-    cal->setName("QuickCalendar");
-    cal->setColor(myColors.at(2));
-    cal->setSelected(false);
-    myCalendars.append(cal);
+    cal = new Calendar(2); //Создаем 2ой календарь
+    cal->setName("QuickCalendar"); //Устанвливаем его имя
+    cal->setColor(myColors.at(2)); //Устанавливаем его цвет
+    cal->setSelected(false); //Устанавливаем статус выделения
+    myCalendars.append(cal); //Добавляем его к списку календарей
+
+	//Аналогичным образом добавляем примеры встреч//
 
     app = new Appointment();
     app->setDateTimes(QDateTime(QDate(2008,12,22),QTime(8,0,0)),
@@ -148,12 +150,13 @@ void QuickCalendarWindow::generateData()
 
     // Personal Calendar
 
-    cal = new Calendar(3);
+    cal = new Calendar(3); //Создаем 3ий календарь аналогично
     cal->setName("Personal calendar");
     cal->setColor(myColors.at(3));
     cal->setSelected(false);
     myCalendars.append(cal);
 
+	//Аналогичным образом добаляем встречи
     app = new Appointment();
     app->setDateTimes(QDateTime(QDate(2008,12,23),QTime(16,0,0)),
                      QDateTime(QDate(2008,12,23),QTime(19,0,0)));
@@ -189,38 +192,42 @@ void QuickCalendarWindow::generateData()
 
 void QuickCalendarWindow::startUp()
 {
-    QWidget *central = new QWidget(this);
-    QVBoxLayout *layout = new QVBoxLayout(central);
-    layout->setMargin(0);
+    QWidget *central = new QWidget(this); //Создаем центральный виджет
+    QVBoxLayout *layout = new QVBoxLayout(central); //Создаем менеджер вертикального выравнивания
+    layout->setMargin(0); //Задаем отступ
 
-    ptrSelectorWidget = new SelectorWidget(this);
-    layout->addWidget(ptrSelectorWidget);
+    ptrSelectorWidget = new SelectorWidget(this); //Создаем виджет выбора месяца и года, недели
+    layout->addWidget(ptrSelectorWidget); //Добавляем его в layout
 
-    ptrCalendarView = new QuickCalendarView();
-    ptrCalendarView->setCalendars(&myCalendars);
-    ptrCalendarView->setMonth(QDate::currentDate().year(), QDate::currentDate().month());
-    layout->addWidget(ptrCalendarView);
+    ptrCalendarView = new QuickCalendarView(); //Создаем непосредственно календарь
+    ptrCalendarView->setCalendars(&myCalendars); //Добавляем к нему список календарей (встречи)
+    ptrCalendarView->setMonth(QDate::currentDate().year(), QDate::currentDate().month()); //Устанавлваем год и месяц
+    layout->addWidget(ptrCalendarView); //Добавляем в layout
+   
+    central->setLayout(layout); //Устанавливаем layout на центральный виджет
 
-    central->setLayout(layout);
+    setCentralWidget(central); //Делаем central центральными виджетом окна
 
-    setCentralWidget(central);
+    createDockWidgets(); //Создаем виджеты в левой части окна (панель календарей)
 
-    createDockWidgets();
+	//Связываем сигналы и слоты
+    connect(ptrSelectorWidget, //виджет выбора месяца
+            SIGNAL(monthChanged(int, int)), //сигнал смены месяца или года
+            ptrCalendarView, //Календарь
+            SLOT(setMonth(int, int))); //Слот установки месяца и года
 
-    connect(ptrSelectorWidget,
-            SIGNAL(monthChanged(int, int)),
-            ptrCalendarView,
-            SLOT(setMonth(int, int)));
-    connect(ptrSelectorWidget,
-            SIGNAL(rangeChanged(const QDate &, const QDate &)),
-            ptrCalendarView,
-            SLOT(setRange(const QDate &, const QDate &)));
-    connect(ptrSelectorWidget,
-            SIGNAL(modeChanged(int)),
-            this,
-            SLOT(modeChanged(int)));
+    connect(ptrSelectorWidget, //виджет выбора месяца
+            SIGNAL(rangeChanged(const QDate &, const QDate &)), //сигнал изменения диапазона
+            ptrCalendarView, //Календарь
+            SLOT(setRange(const QDate &, const QDate &))); //слот установки диапазона
 
-    connect(monthAction, SIGNAL(triggered()),
+    connect(ptrSelectorWidget,//виджет выбора месяца
+            SIGNAL(modeChanged(int)), //сигнал смены режима
+            this, //главное окно
+            SLOT(modeChanged(int))); //слот смены режима
+
+	//Связываем сигналы объектов действий с соответствующми слотами
+	connect(monthAction, SIGNAL(triggered()),
             ptrSelectorWidget, SLOT(showMonthBased()));
     connect(weekAction, SIGNAL(triggered()),
             ptrSelectorWidget, SLOT(showWeekBased()));
@@ -234,7 +241,7 @@ void QuickCalendarWindow::startUp()
 
 void QuickCalendarWindow::onExit()
 {
-    exit(0);
+    exit(0); //Выход
 }
 
 void QuickCalendarWindow::closeEvent(QCloseEvent *event)
@@ -244,29 +251,32 @@ void QuickCalendarWindow::closeEvent(QCloseEvent *event)
 
 void QuickCalendarWindow::createDockWidgets()
 {
-    ptrTableView = new QTableView();
-    ptrTableView->setModel(ptrCalendarModel);
-    ptrTableView->setSelectionMode(QAbstractItemView::NoSelection);
-    ptrTableView->setGridStyle(Qt::NoPen);
-    ptrTableView->setDragDropMode(QAbstractItemView::NoDragDrop);
-    ptrTableView->setSelectionMode(QAbstractItemView::NoSelection);
-    ptrTableView->horizontalHeader()->hide();
-    ptrTableView->verticalHeader()->hide();
-    ptrTableView->resizeColumnsToContents();
+    ptrTableView = new QTableView(); //Создаем панель календарей
+    ptrTableView->setModel(ptrCalendarModel); //Добавляем к ней модель календарей
+    ptrTableView->setSelectionMode(QAbstractItemView::NoSelection); //Устанавливаем режим выделения
+    ptrTableView->setGridStyle(Qt::NoPen); //Устанавливаем вид пера
+    ptrTableView->setDragDropMode(QAbstractItemView::NoDragDrop); //Устанавливаем режим перетаскивания
+    //Зачем-то 2ой раз устанавливаем режим выделения 
+	ptrTableView->setSelectionMode(QAbstractItemView::NoSelection); 
+    ptrTableView->horizontalHeader()->hide(); //Скрываем заголовки столбцов
+    ptrTableView->verticalHeader()->hide(); //Скрываем заголовки строк
+    ptrTableView->resizeColumnsToContents(); //Устанваливаем ширину ячеек по содержимому
+	
+    QVBoxLayout *layout = new QVBoxLayout(); //Создаем менеджер вертикального выравнивания
+    layout->setMargin(0); //Устанавливаем отступ
+    layout->addWidget(ptrTableView); //Добавляем в layout панель календарей
 
-    QVBoxLayout *layout = new QVBoxLayout();
-    layout->setMargin(0);
-    layout->addWidget(ptrTableView);
+    QWidget *widget = new QWidget(); //Создаем виджет
+    widget->setLayout(layout); //Добавляем к нему менеджер выравнивания
+    widget->setGeometry(0,0,100,100); //Устанавливаем геометрию
 
-    QWidget *widget = new QWidget();
-    widget->setLayout(layout);
-    widget->setGeometry(0,0,100,100);
+    QDockWidget *dock = new QDockWidget(tr("Calendars"), this); //Создаем "плавающий" виджет
+	//Устанавливаем области крепления к основному окну
+    dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea); 
+    addDockWidget(Qt::LeftDockWidgetArea, dock); //Крепим виджет к окну
+    dock->setWidget(widget); //Добавляем панель календарей
 
-    QDockWidget *dock = new QDockWidget(tr("Calendars"), this);
-    dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-    addDockWidget(Qt::LeftDockWidgetArea, dock);
-    dock->setWidget(widget);
-
+	//Связываем сигнал изменения списка выбранных календарей с соотв. слотом окна
     connect(ptrCalendarModel, SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &)),
             this, SLOT(dataChanged(const QModelIndex &, const QModelIndex &)));
 }
@@ -275,19 +285,22 @@ void QuickCalendarWindow::createDockWidgets()
 void QuickCalendarWindow::dataChanged(const QModelIndex &topLeft,
                                       const QModelIndex &bottomRight)
 {
-    ptrCalendarView->dataChanged();
-    ptrCalendarView->layoutChanged();
+    ptrCalendarView->dataChanged(); //Изменяем данные
+    ptrCalendarView->layoutChanged();  //Изменяем выравнивание
 
     //update();
 }
 
+/**
+* @param mode - номер режима.
+*/
 void QuickCalendarWindow::modeChanged(int mode)
 {
-    if(mode == 0)
+    if(mode == 0) //Если номер режима равен 0
     {
-        ptrCalendarView->setDisplayMode(QuickCalendarView::DisplayFullWeeks);
+        ptrCalendarView->setDisplayMode(QuickCalendarView::DisplayFullWeeks); //Отображаем полные недели
     }else
     {
-        ptrCalendarView->setDisplayMode(QuickCalendarView::DisplayOnlyRange);
+        ptrCalendarView->setDisplayMode(QuickCalendarView::DisplayOnlyRange); //Иначе только диапазон
     }
 }
