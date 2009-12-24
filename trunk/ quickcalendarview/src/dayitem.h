@@ -61,12 +61,6 @@ public:
 	*/
     void setDate(const QDate &date);
     //void setWeekItem(
-	/**
-	@brief Метод отрисовки элемента для
-	@param painter Класс отрисовки базовых графических элементов в виджете
-	@param option Стиль отрисовки
-	@param widget ??
-	*/
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                 QWidget *widget);
 
