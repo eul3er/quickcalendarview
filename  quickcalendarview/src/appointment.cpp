@@ -56,8 +56,8 @@ void Appointment::setTimes(const QTime &startTime, const QTime &endTime)
     }
 }
 
-/*!
-* Устанавливает дату и время начала встречи.
+/**
+* @brief Устанавливает дату и время начала встречи.
 * @param startDateTime - момент начала встречи.
 */
 void Appointment::setStartDateTime(const QDateTime &startDateTime)
@@ -72,7 +72,7 @@ void Appointment::setStartDateTime(const QDateTime &startDateTime)
 }
 
 /**
-  Устанавливает дату и время окончания встречи.
+* @brief Устанавливает дату и время окончания встречи.
 * @param endDateTime - момент окончания встречи.
 */
 void Appointment::setEndDateTime(const QDateTime &endDateTime)
@@ -86,8 +86,8 @@ void Appointment::setEndDateTime(const QDateTime &endDateTime)
     }
 }
 
-/*!
-    Если date равна дате начала встречи, метод вернет номер четверти часа, в которой начнется встреча.
+/**
+	@brief Если date равна дате начала встречи, метод вернет номер четверти часа, в которой начнется встреча.
     Если date меньше чем дата окончания встречи, функция вернет 0.
 	Иначе -1.
 */
@@ -103,9 +103,9 @@ int Appointment::startQuater(const QDate &date) const
         return -1; //Иначе вернем -1
 }
 
-/*!
-    Если date равна дате начала встречи, метод вернет номер четверти часа, в которой начнется встреча.
-    Если date меньше чем дата окончания встречи, функция вернет 0.
+/**
+	@brief Если date равна дате начала встречи, метод вернет номер четверти часа, в которой начнется встреча.
+	Если date меньше чем дата окончания встречи, функция вернет 0.
 	Иначе -1.
 */
 int Appointment::endQuater(const QDate &date) const
@@ -126,8 +126,8 @@ bool Appointment::before(Appointment *app1, Appointment *app2)
     return app1->startDateTime() < app2->startDateTime(); //Сравниваем время начала встреч
 }
 
-/*!
-    Сравнивает встречи по ключу.
+/**
+	@brief Сравнивает встречи по ключу.
 */
 bool Appointment::operator==(const Appointment &other) const {
     if(this == &other) //сравниваем адреса
@@ -138,15 +138,15 @@ bool Appointment::operator==(const Appointment &other) const {
         return false;
 }
 
-/*!
-    Сравнивает встречи по ключу.
+/**
+	@brief Сравнивает встречи по ключу.
 */
 bool Appointment::operator!=(const Appointment &other) const {
     return !(*this == other); //Инверсия равенства
 }
 
-/*!
-  Сравнивает встречи по времени их начала.
+/**
+	@brief Сравнивает встречи по времени их начала.
 */
 bool Appointment::operator<(const Appointment &other) const {
     if(this == &other) //Сравниваем указатели
