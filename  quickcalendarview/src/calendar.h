@@ -34,6 +34,29 @@
  @class Calendar
  @brief Класс для хранения данных календарей.
 */
+
+/**
+Пример использования:
+@code 
+    Calendar *cal = new Calendar(0);
+    cal->setName("Holiday Calendar");
+    cal->setColor(QColor(56, 128, 189));
+    cal->setSelected(false);
+
+    Appointment *app = new Appointment();
+    app->setDateTimes(QDateTime(QDate(2008,12,23),QTime(19,0,0)),
+                     QDateTime(QDate(2008,12,23),QTime(23,0,0)));
+
+    app->setSubject("Holiday party!");
+    app->setPlace("Secret place"); 
+    app->setDescription("Secret holiday party at secret place. Everybody is welcome!");
+    cal->insertAppointment(app); 
+@endcode
+Создаем объект класса Calendar с индексом 0. Методом setName() устанавливаем его имя. 
+Метод setColor() позволяет задать нужный цвет календаря, а setSelected() - требуемый статус выделения.
+Создаем объект класса Appointment (см. пример в описании). Добавляем созданную встречу к календарю
+вызовом insertAppointment().
+*/ 
 class Calendar
 {
 public:

@@ -35,6 +35,26 @@ class Calendar;
 * @class Appointment
 * @brief Базовый класс для хранения информации о встречах
 */ 
+
+/**
+Пример использования:
+@code
+    Appointment *app = new Appointment();
+    app->setDateTimes(QDateTime(QDate(2008,12,23),QTime(19,0,0)),
+                     QDateTime(QDate(2008,12,23),QTime(23,0,0)));
+
+    app->setSubject("Holiday party!");
+    app->setPlace("Secret place"); 
+    app->setDescription("Secret holiday party at secret place. Everybody is welcome!");
+
+    Calendar *cal = new Calendar(0);
+    cal->insertAppointment(app); 
+@endcode
+Создаем объект класса Appointment. Методом setDateTimes()задаем время начала и окончания встречи.
+Предмет встречи позволяет установить метод setSubject(), место встречи - метод setPlace(), а метод
+setDescription() задает ее описание.
+Создаем объект класса Calendar. Добавляем созданную встречу к календарю вызовом insertAppointment().
+*/
 class Appointment 
 {
 public:
