@@ -27,46 +27,60 @@
 
 class ScrollAreaItem;
 
+/**
+* @class ScrollBar
+* @brief Класс, реализующий полосу прокрутки
+*/
 class ScrollBar : public CalendarItem
 {
 public:
+	///Конструктор
     ScrollBar(ScrollAreaItem *scrollArea = 0, QGraphicsScene *scene = 0);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         QWidget *widget);
 
     virtual void layoutChanged();
 
+	///Вернет значение, соответствующее текущему положению ползунка
     qreal getValue() const;
+	///Установит ползунок в положение, соответствующее value
     void scrollTo(qreal value);
-    void scrollBy(qreal srollBy);
+	///Изменит положение ползунка на sсrollBy
+    void scrollBy(qreal sсrollBy);
 
+	///Устанавливает значение, соответствующее верхнему положению ползунка
     void setMinimum(qreal min);
+	///Устанавливает значение, соответствующее нижнему положению ползунка
     void setMaximum(qreal max);
 
+	///Действия при изменении размера
     virtual void onResize(const QSizeF &size, const QSizeF &oldSize);
 
-    void ensureVisibility(qreal y);
+    void ensureVisibility(qreal y); ///<Обеспечивает видимость
 
-    int orientation;
+    int orientation; ///<Ориентация (не используется)
 
 protected:
+	///Обработчик события нажатия кнопки мыши
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	///Обработчик события перемещения мыши
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	///Обработчик события отпускания кнопки мыши
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-    qreal myMin;
-    qreal myMax;
-    qreal myValue;
-    qreal myFactor;
+    qreal myMin; ///<Максимальное значение
+    qreal myMax; ///<Минимальное значение
+    qreal myValue; ///<Текущее значение
+    qreal myFactor; ///<Масштаб
 
-    qreal sliderMax;
-    qreal sliderPos;
-    qreal sliderHeight;
+    qreal sliderMax; ///<Максимальное положение ползунка
+    qreal sliderPos; ///<Текущее положение ползунка
+    qreal sliderHeight; ///<Высота (размер) ползунка
 
-    int pressedControl;
+    int pressedControl; ///<Флаг нажатия кнопки мыши
 
-    ScrollAreaItem *ptrArea;
+    ScrollAreaItem *ptrArea; ///<Прокручиваемая область
     //ScrollHandle myHandle;
 };
 
