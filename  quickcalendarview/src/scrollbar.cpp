@@ -24,166 +24,197 @@
 #include "scrollbar.h"
 #include "scrollareaitem.h"
 
+/**
+* @param scrollArea -  указатель на область, которой принадлежит полоса прокрутки.
+* @param scene - указатель на сцену.
+*/
 ScrollBar::ScrollBar(ScrollAreaItem *scrollArea, QGraphicsScene *scene) : 
     CalendarItem(scrollArea, scene), ptrArea(scrollArea)
 {
-    myMin = 0.0;
-    myMax = 0.0;
-    myValue = 0.0;
-    myFactor = 1.0;
+    myMin = 0.0; //Устанавливаем мин. значение
+    myMax = 0.0; //макс. значение
+    myValue = 0.0; //текущее значение
+    myFactor = 1.0; //Масштаб
 
-    sliderPos = 0;
-    sliderMax = 0;
-    pressedControl = 0;
+    sliderPos = 0; //позиция ползунка
+    sliderMax = 0; //макс. позиция ползунка
+    pressedControl = 0; //флаг нажатия ползунка
 
-    myBoundingRect.adjust(0,0,16,16);
+    myBoundingRect.adjust(0,0,16,16); //задаем область рисования
 }
 
 void ScrollBar::paint(QPainter *painter,
     const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    int width = (int)myBoundingRect.width();
-    int height = (int)myBoundingRect.height();
+    int width = (int)myBoundingRect.width(); //Запоминаем ширину
+    int height = (int)myBoundingRect.height(); //Запоминаем высоту
 
-    painter->setPen(Qt::NoPen);
-    painter->setBrush(QBrush(QColor(161,161,129)));
-    painter->drawRect(0,height/3,width,height/3);
+    painter->setPen(Qt::NoPen); //Устанавливаем стиль пера
+    painter->setBrush(QBrush(QColor(161,161,129))); //Устанавливаем цвет кисти
+    painter->drawRect(0,height/3,width,height/3); //Рисуем прямоугольник
 
-    painter->setBrush(QBrush(QColor(191,191,191)));
-    painter->drawRect(0,0,width,height/3);
-    painter->drawRect(0,(height*2)/3,width,height/3);
+    painter->setBrush(QBrush(QColor(191,191,191))); //Устанавливаем цвет кисти
+    painter->drawRect(0,0,width,height/3); //Рисуем прямоугольник
+    painter->drawRect(0,(height*2)/3,width,height/3); //Рисуем прямоугольник
 
-    painter->setPen(QPen(QColor(63,63,63)));
-    painter->setBrush(QBrush(QColor(255,255,255,127)));
-    painter->drawRect(0, sliderPos, width, sliderHeight);
+    painter->setPen(QPen(QColor(63,63,63))); //Устанавливаем стиль пера
+    painter->setBrush(QBrush(QColor(255,255,255,127))); //Устанавливаем цвет кисти
+    painter->drawRect(0, sliderPos, width, sliderHeight); //Рисуем прямоугольник (ползунок)
 }
 
 void ScrollBar::layoutChanged()
 {
-    qreal height = myBoundingRect.height();
+    qreal height = myBoundingRect.height(); //Запоминаем высоту
 
-    sliderHeight = height * myFactor;
-    sliderPos = myValue * myFactor;
+    sliderHeight = height * myFactor;  //Изменяем высоту ползунка
+    sliderPos = myValue * myFactor; //и его положение в соответствии с масштабом
 
-    ptrArea->ptrItem->setPos(0, -myValue);
+    ptrArea->ptrItem->setPos(0, -myValue); //задаем позицию прокручиваемой области
 
-    ptrArea->update();
+    ptrArea->update(); //и обновляем ее
 }
 
+/**
+* @param size -  новый размер.
+* @param oldSize - старый размер.
+*/
 void ScrollBar::onResize(const QSizeF &size, const QSizeF &oldSize)
 {
-    qreal posFactor = 0;
+    qreal posFactor = 0; //новый масштаб
 
-    if(oldSize.height() != 0)
-        posFactor = size.height() / oldSize.height();
+    if(oldSize.height() != 0) //если старый размер не 0.
+        posFactor = size.height() / oldSize.height(); //Считаем отношение новой высоты к старой
 
-    if(posFactor != 1)
+    if(posFactor != 1) //Если масштаб не 1
     {
-        if(myMax != 0)
-            myFactor = size.height() / myMax;
+        if(myMax != 0) //Если макс значения не 0
+            myFactor = size.height() / myMax; //Считаем новый масштаб
         else
-            myFactor = 0;
+            myFactor = 0; //Иначе 0
 
-        if(myFactor > 1)
-            scrollTo(0);
+        if(myFactor > 1) //если масштаб больше 1
+            scrollTo(0); //прокручиваем к 0
         else
-            scrollTo(posFactor * myValue);
+            scrollTo(posFactor * myValue); //иначе к новому значению
     }
 }
 
+/**
+* @param min -  новое минимальное значение.
+*/
 void ScrollBar::setMinimum(const qreal min)
 {
-    if(min != myMin)
+    if(min != myMin) //Если новое значение не равно текущему
     {
-        myMin = min;
-        layoutChanged();
+        myMin = min; //Установим новое значение
+        layoutChanged(); //изменить положение ползунка и прокрутить область
     }
 }
 
+/**
+* @param min -  новое максимальное значение.
+*/
 void ScrollBar::setMaximum(const qreal max)
 {
-    if(max != myMax)
+    if(max != myMax) //Если новое значение не равно текущему
     {
-        myMax = max;
+        myMax = max; //Установим новое значение
 
-        if(myMax != 0)
-            myFactor = myBoundingRect.height() / myMax;
+        if(myMax != 0) //если значение не 0
+            myFactor = myBoundingRect.height() / myMax; //Считаем масштаб
         else
-            myFactor = 0;
+            myFactor = 0; //Иначе масштаб = 0
 
-        if(myFactor >= 1)
-            myValue = 0;
+        if(myFactor >= 1) //если масштаб больше 1
+            myValue = 0; //Установим значение 0
 
-        layoutChanged();
+        layoutChanged(); //изменить положение ползунка и прокрутить область
     }
 }
 
+/**
+* @return значение, соответстующее текущему положению ползунка.
+*/
 qreal ScrollBar::getValue() const
 {
-    return myValue;
+    return myValue; //вернуть значение
 }
-
+/**
+* @param value -  новое значение.
+*/
 void ScrollBar::scrollTo(qreal value)
 {
-    if(value != myValue)
+    if(value != myValue) //если новое значение не равно текущему
     {
-        if(myFactor > 1)
-            myValue = 0;
+        if(myFactor > 1) //Если масштаб больше 1
+            myValue = 0; //Установим новое значение на 0
         else
         {
-            if(value < myMin)
-                myValue = myMin;
-            else if(value > myMax - myBoundingRect.height())
-                myValue = myMax - myBoundingRect.height();
-            else
-                myValue = value;
+            if(value < myMin) //Если новое значение меньше минимального
+                myValue = myMin; //установим минимальное
+            else if(value > myMax - myBoundingRect.height()) //если больше максимального
+                myValue = myMax - myBoundingRect.height(); //установим максимальное
+            else 
+                myValue = value; //иначе установим заданное
         }
 
-        layoutChanged();
+        layoutChanged();//изменить положение ползунка и прокрутить область
     }
 }
-
+/**
+* @param scrollBy -  разница между новым и старым значением.
+*/
 void ScrollBar::scrollBy(qreal scrollBy)
 {
-    if(myFactor < 1)
-        scrollTo(myValue + scrollBy);
+    if(myFactor < 1) //если масштаб меньше 1
+        scrollTo(myValue + scrollBy); //прокрутим полосу к новому значению
 }
-
+/**
+* @param y - значение.
+*/
 void ScrollBar::ensureVisibility(qreal y)
 {
-    if(y > myValue + myBoundingRect.height())
+    if(y > myValue + myBoundingRect.height()) //если у больше тек. значения и высоты области прорисовки
     {
-        scrollBy(10);
-    }else if(y < myValue)
+        scrollBy(10); //прокрутим на 10
+    }else if(y < myValue) //Иначе если у меньше тек. значения
     {
-        scrollBy(-10);
+        scrollBy(-10); //прокрутим не -10
     }
 }
-
+/**
+* @param event - событие мыши в каркасе графического представления.
+*/
 void ScrollBar::mousePressEvent(QGraphicsSceneMouseEvent *event)
  {
-    if (event->button() != Qt::LeftButton) {
-        event->ignore();
+    if (event->button() != Qt::LeftButton) { //если нажате не левая кнопка мыши
+        event->ignore(); //игнорируем событие
         return;
     }
 
+	//если мышь нажата не над ползунком
     if(event->pos().y() < sliderPos || event->pos().y() > sliderPos + sliderHeight)
-        return;
+        return; //выходим
 
-    pressedControl = 1;
-    setCursor(Qt::ClosedHandCursor);
+    pressedControl = 1; //устанавливаем флаг нажатия мыши
+    setCursor(Qt::ClosedHandCursor); //меняем курсор
  }
-
+/**
+* @param event - событие мыши в каркасе графического представления.
+*/
 void ScrollBar::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(pressedControl == 1){
-        if(myFactor != 0)
-            scrollBy((event->pos().y() - event->lastPos().y()) / myFactor);
-    }
+    if(pressedControl == 1){ ///Если нажата левая кнопка
+        if(myFactor != 0) //и масштаб не 0
+            scrollBy((event->pos().y() - event->lastPos().y()) / myFactor); //Прокручиваем курсор
+	}
 }
-
+/**
+* @param event - событие мыши в каркасе графического представления.
+*/
 void ScrollBar::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    pressedControl = 0;
-    setCursor(Qt::ArrowCursor);
+    pressedControl = 0; //Сбрасываем флаг нажатия мыши
+    setCursor(Qt::ArrowCursor); //Возвращаем стандартный курсор
 }
+
