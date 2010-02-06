@@ -29,60 +29,51 @@
 #include "weekitem.h"
 #include "quickcalendarview.h"
 
-/*!
-    Constructor for AppointmentItem
-*/
+
 AppointmentItem::AppointmentItem(Appointment *appointment,
                                  DayItem *dayItem,
                                  QGraphicsItem *parent,
                                  QGraphicsScene *scene) :
     CalendarItem(parent, scene),
-    ptrAppointment(appointment),    
+    ptrAppointment(appointment),    //Инициализируем поля
     ptrDayItem(dayItem),
     myFont("Arial", 12, QFont::Bold)
 {
-    myColumn = 1;
-    myColumnSpan = 1;
+    myColumn = 1; //По умолчанию элемент расположим в 1ом ряду
+    myColumnSpan = 1; //Перекрывает 1 ряд
 
-    setFlag(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemIsSelectable); //Разрешить выделение элемента
 }
 
-/*!
-	Метод рисования элемента встречи (через QPainter)
-    Paints appointment.
-*/
 void AppointmentItem::paint(QPainter *painter,
     const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setFont(myFont);
+    painter->setFont(myFont); //Установим шрифт
 
-    painter->setPen(QPen(myColor));
-    QColor color = myColor;
-    color.setAlpha(159);
-    painter->setBrush(QBrush(color));
-    painter->drawRoundedRect(myBoundingRect, 10, 10);
+    painter->setPen(QPen(myColor)); //Цвет пера
+    QColor color = myColor; //Запомним цвет пера
+    color.setAlpha(159); //Установим альфа-составляющую
+    painter->setBrush(QBrush(color)); //Установим полученный цвет кисти
+    painter->drawRoundedRect(myBoundingRect, 10, 10); //Рисуем прямоугольник
 
 
-    painter->setPen(QPen(QColor(255,255,255)));
-    painter->drawText(myBoundingRect.adjusted(3,3,0,0),
+    painter->setPen(QPen(QColor(255,255,255))); //Задаем цвет пера
+    painter->drawText(myBoundingRect.adjusted(3,3,0,0), //Рисуем текст с временем встречи и субъектом встречи
                       Qt::AlignLeft | Qt::TextWordWrap,
                       ptrAppointment->startTime().toString("HH:mm") + " " + mySubject);
 }
 
-/*!
-    Validates layout.
-*/
+
 void AppointmentItem::layoutChanged()
 {
-    myColor = ptrAppointment->calendar()->color();
-    mySubject = ptrAppointment->subject();
+    myColor = ptrAppointment->calendar()->color(); //Запомним цвет календаря
+    mySubject = ptrAppointment->subject(); //Запомним субъект встречи
 }
 
-/*!
-	Обработчик двойного клика по элементу встречи.
-    Handles double click events.
+/**
+* @param event - событие мыши в каркасе графического представления.
 */
 void AppointmentItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-    ptrDayItem->ptrCalendarView->showAppointmentForm(ptrAppointment);
+    ptrDayItem->ptrCalendarView->showAppointmentForm(ptrAppointment); //Отобразим форму настройки встречи
 }

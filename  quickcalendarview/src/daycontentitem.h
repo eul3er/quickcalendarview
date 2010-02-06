@@ -27,10 +27,15 @@
 
 class DayItem;
 
+/**
+* @class DayContentItem
+* @brief Класс для отображения содержимого дня недели
+*/ 
 class DayContentItem : public CalendarItem
 {
 
 public:
+	///Конструктор
     DayContentItem(DayItem *dayItem, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -40,20 +45,24 @@ public:
     virtual void dataChanged();
 
 protected:
+	///Обработчик события двойного клика мышью
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+    ///Обработчик события нажатия клавиши мыши
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	///Обработчик события перемещения мыши
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	///Обработчик события отпускания клавиши мыши
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-    DayItem *ptrDayItem;
+    DayItem *ptrDayItem; ///<Указатель на DayItem 
 
-    int myColumns;
+    int myColumns; //< Число рядов
 
-    int dragStart;
-    int dragEnd;
+    int dragStart; //<Начало выделенной мышью области
+    int dragEnd; //<Окончание выделенной мышью области
 
-    bool dragSelection;
+    bool dragSelection; //<Флаг, показывающий выделена ли мышью какая-либо область
 };
 
 #endif

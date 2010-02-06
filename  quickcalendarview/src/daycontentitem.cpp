@@ -29,34 +29,41 @@
 #include "dayitem.h"
 #include "quickcalendarview.h"
 
+/**
+* @param dayItem -  указатель на DayItem.
+* @param parent -  указатель на родителя.
+* @param scene - указатель на сцену.
+*/
 DayContentItem::DayContentItem(DayItem *dayItem, QGraphicsItem *parent, QGraphicsScene *scene) : 
-    CalendarItem(parent, scene), ptrDayItem(dayItem)
+    CalendarItem(parent, scene), ptrDayItem(dayItem) //Вызываем конструктор родителя, инициализируем ptrDayItem
 {
-    myColumns = 1;
-    dragStart = dragEnd = 0;
-    dragSelection = false;
+    myColumns = 1; 
+    dragStart = dragEnd = 0;  //Начало выделенной области и конец 0
+    dragSelection = false; //Мышью ничего не выбрано
 
-    setHandlesChildEvents(true);
-    setFlag(QGraphicsItem::ItemIsSelectable);
-    setAcceptsHoverEvents(true);
+    setHandlesChildEvents(true); //Объект будет обрабатывать события для всех его детей
+    setFlag(QGraphicsItem::ItemIsSelectable); //Разрешаем выделение элементов
+    setAcceptsHoverEvents(true); //Объект будет захватывать hover events
+	//Hover events are delivered when there is no current mouse grabber item.
+	//Такие события формируются, когда нет текущего захваченного мышью элемента.
 }
 
 void DayContentItem::paint(QPainter *painter,
     const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    int left = 0;
-    int width = (int)myBoundingRect.width();
-    int height = (int)myBoundingRect.height();
+    int left = 0; //Отступ слева
+    int width = (int)myBoundingRect.width(); //Запоминаем ширину
+    int height = (int)myBoundingRect.height(); //и высоту области для рисования
 
-    if(ptrDayItem->myDate.dayOfWeek() < 6)
+    if(ptrDayItem->myDate.dayOfWeek() < 6) //Если день недели меньше 6го (будний день)
     {
-        painter->setBrush(QBrush(QColor(255,255,233)));
-        painter->drawRect(0,height/3,width,height/3);
+        painter->setBrush(QBrush(QColor(255,255,233))); //задаем цвет кисти
+        painter->drawRect(0,height/3,width,height/3); //Рисуем фоновый прямоугольник 8-00 15-00
 
-        painter->setBrush(QBrush(QColor(233,233,233)));
-        painter->drawRect(0,0,width,height/3);
-        painter->drawRect(0,(height*2)/3,width,height/3);
-    }else
+        painter->setBrush(QBrush(QColor(233,233,233))); //Задаем цвет кисти
+        painter->drawRect(0,0,width,height/3); //фоновый прямоугольник 0-00 до 7-00
+        painter->drawRect(0,(height*2)/3,width,height/3); //16-00 - 23-00
+    }else //Выходной день - аналогично буднему, но другим цветом
     {
         painter->setBrush(QBrush(QColor(225,225,203)));
         painter->drawRect(0,height/3,width,height/3);
@@ -66,16 +73,17 @@ void DayContentItem::paint(QPainter *painter,
         painter->drawRect(0,(height*2)/3,width,height/3);
     }
 
-    painter->setPen(QPen(QColor(127,127,127)));
+    painter->setPen(QPen(QColor(127,127,127))); //Задаем цвет пера
     for(int i=0;i<24;i++)
     {
-        painter->drawLine(left, i*10*4, left+width, i*10*4);
+        painter->drawLine(left, i*10*4, left+width, i*10*4); //Рисуем 24 горизонтальные линии (границы часа)
     }
 
-    painter->setPen(QPen(QColor(191,191,191)));
+    painter->setPen(QPen(QColor(191,191,191))); //Задаем цвет пера
     for(int i=0;i<24;i++)
     {
-        painter->drawLine(left, i*10*4 + 10 * 2, left+width, i*10*4 + 10 * 2);
+         painter->drawLine(left, i*10*4 + 10 * 2, left+width, i*10*4 + 10 * 2);
+		  //Рисуем 24 горизонтальные линии (границы получаса)
     }
 
     if(option->state & QStyle::State_MouseOver)
@@ -83,32 +91,34 @@ void DayContentItem::paint(QPainter *painter,
     }
 
     // Selection
-    if(dragSelection)
+    if(dragSelection) //Если существует выбранная мышью область
     {
-        painter->setPen(Qt::NoPen);
-        painter->setBrush(QBrush(QColor(0,63,255,127)));
-        painter->drawRect(0, dragStart, width, dragEnd);
+        painter->setPen(Qt::NoPen); //Убираем границы
+        painter->setBrush(QBrush(QColor(0,63,255,127))); //Устанавливаем цвет
+        painter->drawRect(0, dragStart, width, dragEnd); //Рисуем соотв. области прямоугольник
     }
 }
 
 void DayContentItem::dataChanged()
 {
-    qDeleteAll(childItems());
+    qDeleteAll(childItems()); //Удалить дочерние элементы
 
-    int minEndTime = 0;
-    int currentColumn = 0;
-    QVector<int> columns;
-    columns << 0;
+    int minEndTime = 0; //Минимальное время окончания
+    int currentColumn = 0; //Текущий элемент
+    QVector<int> columns; //Вектор хранит номера четвертей часов, в которых оканчиваются встречи
+	columns << 0; //Помещаем туда 0
 
-    QListIterator <Appointment *> i(ptrDayItem->myAppointments);
-    while(i.hasNext())
+    QListIterator <Appointment *> i(ptrDayItem->myAppointments); //Встречи
+    while(i.hasNext()) //Идем по встречам
     {
-        Appointment *appointment = i.next();
+        Appointment *appointment = i.next(); //Получаем объект встречи
 
+		//Создаем объект для граф. отображения встречи
         AppointmentItem *item = new AppointmentItem(appointment, ptrDayItem, this);
 
-        minEndTime = 24 * 4;
+        minEndTime = 24 * 4; //Установим минимальное время
 
+		//Находим минимальное время окончания встречи во всех рядах
         for(int j=0;j<columns.size();j++)
         {
             if(columns[j] < minEndTime)
@@ -117,24 +127,27 @@ void DayContentItem::dataChanged()
                 currentColumn = j;
             }
         }
-
+        
+		//Если номер четверти часа начала встречи меньше минимального времени окончания
         if(appointment->startQuater(ptrDayItem->myDate) < minEndTime)
         {
-            item->setColumn(columns.size());
-            item->setColumnSpan(1);
-            columns.append(appointment->endQuater(ptrDayItem->myDate));
+            item->setColumn(columns.size());  //Установим элемент в последний ряд
+            item->setColumnSpan(1); //Элемент перекрывает 1 ряд
+            columns.append(appointment->endQuater(ptrDayItem->myDate)); 
+			//Добавляем в вектор время четверти часа окончания встречи
         }else{
 
-            int beginTime = appointment->startQuater(ptrDayItem->myDate);
-            int columnSpan = 1;
+            int beginTime = appointment->startQuater(ptrDayItem->myDate); //Получим номер четверти часа начала встречи
+            int columnSpan = 1; //Элемент перекрывает 1 ряд
 
-            for(int j=0;j<columns.size();j++)
+            for(int j=0;j<columns.size();j++) //Идем по вектору
             {
-                if(columns[j] <= beginTime)
+                if(columns[j] <= beginTime) //Если время меньше времени начала
                 {
-                    int width = 1;
-                    for(int k=j+1;k<columns.size();k++)
+                    int width = 1; //Ширина 1
+                    for(int k=j+1;k<columns.size();k++) //Идем по оставшейся части массива
                     {
+						//Считаем количество идущих подряд ячеек, у которых содержимое меньше или равно beginTime
                         if(columns[k] <= beginTime)
                         {
                             width++;
@@ -144,127 +157,142 @@ void DayContentItem::dataChanged()
                         }
                     }
 
-                    if(width > columnSpan)
+                    if(width > columnSpan) //Если ширина больше количества рядов, перекрываемых элементом
                     {
-                        columnSpan = width;
-                        currentColumn = j;
+                        columnSpan = width; //Запомним число перекрываемых рядов
+                        currentColumn = j; //и запомним текущий элемент
                     }
                 }
             }
 
-            item->setColumn(currentColumn);
-            item->setColumnSpan(columnSpan);
+            item->setColumn(currentColumn); //Зададим ячейку
+            item->setColumnSpan(columnSpan);// Зададим число перекрываемых рядов
 
+			//Для всех элементов от текущего до текущего плюс промежуток
             for(int j=currentColumn;j<currentColumn+columnSpan;j++)
-                columns[j] = appointment->endQuater(ptrDayItem->myDate);
+                columns[j] = appointment->endQuater(ptrDayItem->myDate); //Зададим значение, равное четверти окончания встречи
         }
     }
 
-    myColumns = columns.size();
+    myColumns = columns.size(); //Запомним количество рядов
 }
 
 
 void DayContentItem::layoutChanged()
 {
-    int left = 0;
+    int left = 0; //Отступ слева
         //int top = 0;
-    int width = (int)myBoundingRect.width();
+    int width = (int)myBoundingRect.width(); //Запомним ширину области рисования
         //int height = myBoundingRect.height();
 
-    int quarterHeight = 10;
+    int quarterHeight = 10; //Высота одной четверти часа
 
-    int columnWidth = width / myColumns;
+    int columnWidth = width / myColumns; //Вычисляем ширину 1го ряда
 
-    QListIterator <QGraphicsItem *> j(childItems());
+    QListIterator <QGraphicsItem *> j(childItems()); //Идем по элементам для отображения встречи
     while(j.hasNext())
     {
-        AppointmentItem *item = (AppointmentItem *)j.next();
+        AppointmentItem *item = (AppointmentItem *)j.next(); //Текущий элемент
 
-        const Appointment *appointment = item->ptrAppointment;
+        const Appointment *appointment = item->ptrAppointment; //Текущая встреча
 
-        int itemTop = quarterHeight * appointment->startQuater(ptrDayItem->myDate);
+		//Вычисляем положение элемента по вертикали
+        int itemTop = quarterHeight * appointment->startQuater(ptrDayItem->myDate); 
+		//Вычисляем высоту элемента
         int itemHeight = (quarterHeight * appointment->endQuater(ptrDayItem->myDate)) - itemTop;
 
-        if(item->column() == 0){
-            item->setPos(left + (columnWidth * item->column()),itemTop);
-            item->setSize((width%myColumns) + (columnWidth*item->columnSpan()),itemHeight);
+        if(item->column() == 0){ //Если элемент находится в 0ом ряду
+            item->setPos(left + (columnWidth * item->column()),itemTop); //Задаем позицию элемента
+            item->setSize((width%myColumns) + (columnWidth*item->columnSpan()),itemHeight); //и его размер
         }else
-        {
-            item->setPos(left + (width%myColumns) + (columnWidth * item->column()), itemTop);
-            item->setSize(columnWidth*item->columnSpan(),itemHeight);
+        {//если не в нулевом ряду
+            item->setPos(left + (width%myColumns) + (columnWidth * item->column()), itemTop);//Задаем позицию элемента
+            item->setSize(columnWidth*item->columnSpan(),itemHeight);//и его размер
         }
 
-        item->layoutChanged();
+        item->layoutChanged(); //Вызываем layoutChanged
     }
 }
 
+/**
+* @param event - событие мыши в каркасе графического представления.
+*/
 void DayContentItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-    QPointF pos = event->scenePos();
+    QPointF pos = event->scenePos(); //Получаем позицию указателя
 
-    QListIterator <QGraphicsItem *> j(childItems());
+    QListIterator <QGraphicsItem *> j(childItems()); //Идем по элементам для отображения встречи
     while(j.hasNext())
     {
         AppointmentItem *item = (AppointmentItem *)j.next();
-        if(item->sceneBoundingRect().contains(pos))
+        if(item->sceneBoundingRect().contains(pos)) //Ищем по какой встречи пользователь кликнул
         {
-            ptrDayItem->ptrCalendarView->showAppointmentForm(item->ptrAppointment);
+            ptrDayItem->ptrCalendarView->showAppointmentForm(item->ptrAppointment); //Вызываем ее форму настройки
         }
     }
 }
 
+/**
+* @param event - событие мыши в каркасе графического представления.
+*/
 void DayContentItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    int y = (int)event->pos().y();
-    dragStart = (int)event->pos().y() - y%20;
-    dragEnd = 0;
-    dragSelection = true;
+    int y = (int)event->pos().y(); //Получаем позицию мыши
+    dragStart = (int)event->pos().y() - y%20; //Координата начала выделения мышью
+    dragEnd = 0; //Окончание на 0
+    dragSelection = true; //Флаг того, что существует выбранная мышью область
 }
 
+/**
+* @param event - событие мыши в каркасе графического представления.
+*/
 void DayContentItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(dragSelection)
+    if(dragSelection) //Если выделение идет
     {
-        int y = (int)event->pos().y();
-        dragEnd = y + 20 - y%20 - dragStart;
+        int y = (int)event->pos().y(); //Получаем положение мыши
+        dragEnd = y + 20 - y%20 - dragStart; //Вычисляем координату окончания выделения
 
         //ptrDayItem->ptrWeekItem->myScrollArea.ensureVisibility(0, event->pos().y());
 
-        update();
+        update(); //Обновляем виджет
     }
 }
 
+/**
+* @param event - событие мыши в каркасе графического представления.
+*/
 void DayContentItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(dragSelection && dragEnd != 0)
+    if(dragSelection && dragEnd != 0) //Если было выделение мышью
     {
-        int startHour = dragStart / 40;
-        int startMinute = 0;
-        if(dragStart%40 > 0)
-            startMinute = 30;
-        QDateTime start(ptrDayItem->myDate, QTime(startHour, startMinute, 0));
+        int startHour = dragStart / 40; //Вычислим час начала
+        int startMinute = 0; //Минуты начала
+        if(dragStart%40 > 0) //Если на 40 не делится нацело
+            startMinute = 30; //Установим 30 минут
+        QDateTime start(ptrDayItem->myDate, QTime(startHour, startMinute, 0)); //Сформируем объект дата-время
 
-        int endHour = (dragStart + dragEnd) / 40;
-        int endMinute = 0;
+        int endHour = (dragStart + dragEnd) / 40; //Вычислим час окончания встречи
+        int endMinute = 0; // и минуты окончания
         if((dragStart + dragEnd)%40 > 0)
             endMinute = 30;
-        if(endHour == 24)
+        if(endHour == 24) //Если час окончания равен 24
         {
-            endHour = 23;
-            endMinute = 59;
+            endHour = 23; //Установим 23 часа
+            endMinute = 59; //59 минут
         }
-        QDateTime end(ptrDayItem->myDate, QTime(endHour, endMinute, 0));
+        QDateTime end(ptrDayItem->myDate, QTime(endHour, endMinute, 0)); //Сформируем объект дата-время
 
-        Appointment *appointment = new Appointment();
+        Appointment *appointment = new Appointment(); //Создадим новое событие
 
-        if(startHour < endHour)
-            appointment->setDateTimes(start, end);
+        if(startHour < endHour) //Если время начала меньше времени окончания
+            appointment->setDateTimes(start, end); //Установим время
         else
-            appointment->setDateTimes(end, start);
+            appointment->setDateTimes(end, start); //Иначе установим время наоборот
 
-        ptrDayItem->ptrCalendarView->showAppointmentForm(appointment);
+        ptrDayItem->ptrCalendarView->showAppointmentForm(appointment); //Отобразим форму настройки встречи
 
-        dragSelection = false;
-        update();
+        dragSelection = false; //Выделения больше нет
+        update(); //Обновим виджет
     }
 }
