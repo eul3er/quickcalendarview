@@ -31,15 +31,16 @@
 #include "calendaritem.h"
 #include "dayitem.h"
 
-/*!
-    \class AppointmentItem
-    \brief Graphics view item for appointments.
-*/
+/**
+* @class AppointmentItem
+* @brief Класс для графического представления информации о встречах
+*/ 
 
 class AppointmentItem : public CalendarItem
 {
 
 public:
+	///Конструктор
     AppointmentItem(Appointment *appointment,
                     DayItem *dayItem,
                     QGraphicsItem *parent = 0,
@@ -48,26 +49,43 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                 QWidget *widget);
 
-    int column() const { return myColumn; }
-    void setColumn(int column) { myColumn = column; }
+	/**
+    *	@brief Метод вернет номер ряда, в котором расположен элемент.
+    *	@return номер ряда, в котором расположен элемент.
+    */
+    int column() const { return myColumn; } 
+	/**
+    *	@brief Метод установит номер ряда, в котором расположен элемент.
+    *	@param column - номер ряда.
+    */
+	void setColumn(int column) { myColumn = column; }
 
+	/**
+    *	@brief Метод вернет количество рядов, перекрываемых элементом.
+    *	@return количество рядов, перекрываемых элементом.
+    */
     int columnSpan() const { return myColumnSpan; }
+	/**
+    *	@brief Метод установит количество рядов, перекрываемых элементом.
+    *	@param columnSpan - количество рядов, перекрываемых элементом.
+    */
     void setColumnSpan(int columnSpan) { myColumnSpan = columnSpan; }
 
     void layoutChanged();
 
 protected:
+	///Обработчик события двойного клика мышью
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-    Appointment *ptrAppointment;
-    DayItem *ptrDayItem;
-    QColor myColor;
-    QFont myFont;
-    QString mySubject;
+    Appointment *ptrAppointment; ///<Указатель на встречу
+    DayItem *ptrDayItem; ///<Указатель на день
+    QColor myColor; ///<Цвет элемента
+    QFont myFont; ///<Шрифт текста на элементе
+    QString mySubject; ///<Субъект встречи
 
-    int myColumn;
-    int myColumnSpan;
+    int myColumn; ///<Ряд, в котором расположен элемент
+    int myColumnSpan; ///<Количество рядов, перекрываемых элементом
 
     friend class DayContentItem;
 };
