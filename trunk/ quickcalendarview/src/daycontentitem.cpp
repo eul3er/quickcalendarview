@@ -74,12 +74,15 @@ void DayContentItem::paint(QPainter *painter,
     }
 
     painter->setPen(QPen(QColor(127,127,127))); //Задаем цвет пера
+	/*Возможная ошибка: число 10 необходимо брать из поля 
+	     ptrDayItem->ptrCalendarView->style()->quarterHeight;*/
     for(int i=0;i<24;i++)
     {
         painter->drawLine(left, i*10*4, left+width, i*10*4); //Рисуем 24 горизонтальные линии (границы часа)
     }
 
     painter->setPen(QPen(QColor(191,191,191))); //Задаем цвет пера
+
     for(int i=0;i<24;i++)
     {
          painter->drawLine(left, i*10*4 + 10 * 2, left+width, i*10*4 + 10 * 2);
@@ -128,7 +131,7 @@ void DayContentItem::dataChanged()
             }
         }
         
-		//Если номер четверти часа начала встречи меньше минимального времени окончания
+		///Если номер четверти часа начала встречи меньше минимального времени окончания
         if(appointment->startQuater(ptrDayItem->myDate) < minEndTime)
         {
             item->setColumn(columns.size());  //Установим элемент в последний ряд

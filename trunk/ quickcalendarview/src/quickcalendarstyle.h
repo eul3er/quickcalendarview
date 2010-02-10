@@ -29,41 +29,45 @@
 #include <QLinearGradient>
 #include <QPen>
 
+/**
+* @class QuickCalendarStyle
+* @brief Класс для хранения информации о внешнем виде календаря
+*/
 class QuickCalendarStyle
 {
 
 public:
-    QuickCalendarStyle();
+    QuickCalendarStyle(); ///<Конструктор
 
-    QFont weekNumberFont;
-    QFont dayNumberFont;
-    QFont dayNameFont;
+    QFont weekNumberFont; ///<Шрифт цифр номера недели
+    QFont dayNumberFont; ///<Шрифт цифр номера дня недели
+    QFont dayNameFont; ///<Шрифт названия дня
 
-    QFont appointmentSubjectFont;
-    QFont clockBarFont;
+    QFont appointmentSubjectFont; ///<Шрифт для отображения информации о встрече
+    QFont clockBarFont; ///<Шрифт для списка часов от 0-00 до 23-00
 
-    int weekLeftMargin;
-    int weekRightMargin;
-    int quarterHeight;
+    int weekLeftMargin; ///<Ширина столбика с номером недели
+    int weekRightMargin; ///<Отступ справа от границы окна до столбика ВС
+    int quarterHeight; ///<Высота получасовой ячейки
 
-    int expandedWeekHeaderHeight;
+    int expandedWeekHeaderHeight; ///<Высота строки с номером недели и днями при развернутом дне
 
-    QPen pastDayPen;
-    QPen todayPen;
-    QPen comingDayPen;
+    QPen pastDayPen; ///<Перо, которым рисуются прошедшие числа
+    QPen todayPen; ///<Перо, которым рисуется сегодняшнее число
+    QPen comingDayPen; ///<Перо, которым рисуются будущие числа
 
-    QLinearGradient pastDayGradient;
-    QLinearGradient todayGradient;
-    QLinearGradient comingDayGradient;
+    QLinearGradient pastDayGradient; ///<Градиент прошедшего дня
+    QLinearGradient todayGradient; ///<Градиент сегодняшнего дня
+    QLinearGradient comingDayGradient; ///<Градиент будущего дня
     
-    QLinearGradient pastWeekendGradient;
-    QLinearGradient weekendGradient;
-    QLinearGradient comingWeekendGradient;
+    QLinearGradient pastWeekendGradient; ///<Градиент прошедших выходных
+    QLinearGradient weekendGradient; ///<Градиент текущих выходных
+    QLinearGradient comingWeekendGradient; ///<Градиент будущих дня
 
-    QFont expandedDayNumberFont;
-    QFont collapsedDayNumberFont;
+    QFont expandedDayNumberFont; ///< Шрифт числа при развернутом дне недели
+    QFont collapsedDayNumberFont; ///< Шрифт числа при свернутом дне недели
 
-    int collapsedWeekHeight() const;
+    int collapsedWeekHeight() const; ///<Метод, возвращающий высоту свернутой недели
 };
 
 

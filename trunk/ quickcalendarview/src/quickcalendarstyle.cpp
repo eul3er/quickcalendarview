@@ -25,7 +25,7 @@
 #include "quickcalendarstyle.h"
 
 QuickCalendarStyle::QuickCalendarStyle() :
-    weekNumberFont("arial", 30),
+    weekNumberFont("arial", 30),  //Задаем значения по умолчанию
     dayNumberFont("arial", 24),
     dayNameFont("arial", 16),
     appointmentSubjectFont("arial", 16),
@@ -64,6 +64,9 @@ QuickCalendarStyle::QuickCalendarStyle() :
 
 }
 
+/**
+* @return всегда 30.
+*/
 int QuickCalendarStyle::collapsedWeekHeight() const
 {
     return 30;
