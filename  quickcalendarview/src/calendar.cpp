@@ -27,9 +27,9 @@
 */
 	//Compares calendars by key values.
 bool Calendar::operator==(const Calendar &other) const {
-    if(this == &other)
+    if(this == &other) //если все поля равны, вернуть true
         return true;
-    else if(other.myKey == myKey)
+    else if(other.myKey == myKey) //если ключи равны так же вернуть true, иначе false
         return true;
     else
         return false;

@@ -57,33 +57,41 @@ public:
             QGraphicsScene *scene = 0);
 	
 	/**
-	@brief Установка даты для дня
+	@brief Установка информации даты для дня
 	*/
     void setDate(const QDate &date);
     //void setWeekItem(
+    /**
+    @brief Метод прорисовки элемента дня
+    */
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                 QWidget *widget);
-
+     
+    //Наследуемые методы обработки изменения родительского слоя и данных
     virtual void layoutChanged();
     virtual void dataChanged();
 
+    
     bool isOutOfRange() const { return amIOutOfRange; }
     void setOutOfRange(bool outOfRange) { amIOutOfRange = outOfRange; }
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	///Обработчик нажатия мыши на элементе, не имеет реализации
+    void mousePressEvent(QGraphicsSceneMouseEvent *event); 
+	///Обработчик перемещния мыши по элементу, не имеет реализации
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	///Обработчик отпускания мыши на элементе
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 private:
     bool amIOutOfRange;
 
     QuickCalendarView *ptrCalendarView;
-    QDate myDate;
+    QDate myDate; ///<Отображаемая дата
 
     DayContentItem *ptrContentItem;
-    QBrush myBrush;
+    QBrush myBrush; ///
     QLinearGradient myGradient;
-    QPen myPen;
+    QPen myPen; 
     QFont myFont;
 
     QString myCaption;

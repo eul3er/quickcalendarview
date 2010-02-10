@@ -24,7 +24,7 @@
 #define DAYCONTENTITEM_H
 
 #include "calendaritem.h"
-
+ 
 class DayItem;
 
 /**

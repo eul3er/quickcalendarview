@@ -22,7 +22,7 @@
 
 #ifndef WEEKITEM_H
 #define WEEKITEM_H
-
+ 
 #include <QGraphicsItemGroup>
 #include <QFont>
 
