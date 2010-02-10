@@ -25,7 +25,7 @@
 
 #include <QList>
 #include <QWidget>
-
+ 
 #include "appointment.h"
 #include "calendar.h"
 #include "ui_appointmentdetailsform.h"

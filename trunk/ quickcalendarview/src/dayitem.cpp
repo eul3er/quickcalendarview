@@ -37,13 +37,14 @@ DayItem::DayItem(QuickCalendarView *calendarView,
     CalendarItem(parent, scene),
     ptrCalendarView(calendarView),
     myDate(date),
-    myClockIcon("clockicon.png")
+    myClockIcon("clockicon.png") 
 {
-    ptrContentItem = new DayContentItem(this);
+    ptrContentItem = new DayContentItem(this); 
     amIOutOfRange = false;
 
     setAcceptsHoverEvents(true);
 }
+
 
 void DayItem::paint(QPainter *painter,
     const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -111,6 +112,7 @@ void DayItem::dataChanged()
 
 }
 
+///Обработчи изменения слоя
 void DayItem::layoutChanged()
 {
     int left = (int)this->pos().x();

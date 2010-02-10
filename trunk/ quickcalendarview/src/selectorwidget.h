@@ -31,7 +31,7 @@
 #include <QStackedLayout>
 #include <QDateEdit>
 #include <QCheckBox>
-
+ 
 class SelectorWidget : public QWidget
 {
     Q_OBJECT

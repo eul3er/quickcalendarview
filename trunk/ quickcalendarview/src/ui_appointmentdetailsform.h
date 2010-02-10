@@ -1,10 +1,10 @@
-﻿/********************************************************************************
-** Form generated from reading ui file 'appointmentdetailsform.ui'
+/********************************************************************************
+** Form generated from reading UI file 'appointmentdetailsform.ui'
 **
-** Created: Wed 23. Dec 12:07:16 2009
-**      by: Qt User Interface Compiler version 4.5.1
+** Created: Thu 28. Jan 02:35:29 2010
+**      by: Qt User Interface Compiler version 4.6.0
 **
-** WARNING! All changes made in this file will be lost when recompiling ui file!
+** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
 #ifndef UI_APPOINTMENTDETAILSFORM_H
@@ -73,7 +73,7 @@ public:
         AppointmentDetailsForm->setSizePolicy(sizePolicy);
         verticalLayout = new QVBoxLayout(AppointmentDetailsForm);
 #ifndef Q_OS_MAC
-        verticalLayout->setMargin(9);
+        verticalLayout->setContentsMargins(9, 9, 9, 9);
 #endif
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         formLayout = new QFormLayout();
@@ -240,7 +240,6 @@ public:
         deleteAppointmentButton->setText(QApplication::translate("AppointmentDetailsForm", "Delete Appointment", 0, QApplication::UnicodeUTF8));
         discardChangesButton->setText(QApplication::translate("AppointmentDetailsForm", "Discard Changes", 0, QApplication::UnicodeUTF8));
         saveChangesButton->setText(QApplication::translate("AppointmentDetailsForm", "Save Changes", 0, QApplication::UnicodeUTF8));
-        Q_UNUSED(AppointmentDetailsForm);
     } // retranslateUi
 
 };

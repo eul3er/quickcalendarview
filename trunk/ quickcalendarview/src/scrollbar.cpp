@@ -179,7 +179,7 @@ void ScrollBar::ensureVisibility(qreal y)
         scrollBy(10); //прокрутим на 10
     }else if(y < myValue) //Иначе если у меньше тек. значения
     {
-        scrollBy(-10); //прокрутим не -10
+        scrollBy(-10); //прокрутим на -10
     }
 }
 /**

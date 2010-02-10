@@ -30,7 +30,7 @@
 #include "appointment.h"
 #include "calendaritem.h"
 #include "dayitem.h"
-
+ 
 /**
 * @class AppointmentItem
 * @brief Класс для графического представления информации о встречах
