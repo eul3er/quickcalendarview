@@ -28,7 +28,7 @@
 
 QuickCalendarWindow::QuickCalendarWindow()
 {
-    setupUi(this); //Устанавливаем разаботанную в QT Desiner форму
+    setupUi(this); //Устанавливаем разработанную в QT Desiner форму
 
     myColors << QColor(56, 128, 189)
     << QColor(249, 162, 57)
@@ -61,7 +61,7 @@ void QuickCalendarWindow::generateData()
     // Holiday calendar
 
     Calendar *cal = new Calendar(0); //Создаем 0ой календарь
-    cal->setName("Holiday Calendar"); //Устанвливаем его имя
+    cal->setName("Holiday Calendar"); //Устанавливаем его имя
     cal->setColor(myColors.at(0)); //Устанавливаем его цвет
     cal->setSelected(false); //Устанавливаем статус выделения
     myCalendars.append(cal); //Добавляем его к списку календарей
@@ -70,7 +70,7 @@ void QuickCalendarWindow::generateData()
     app->setDateTimes(QDateTime(QDate(2008,12,23),QTime(19,0,0)),
                      QDateTime(QDate(2008,12,23),QTime(23,0,0))); //Период события
 
-    app->setSubject("Holiday party!"); //Устанвливем субъект встречи
+    app->setSubject("Holiday party!"); //Устанавливаем субъект встречи
     app->setPlace("Secret place"); //Устанавливаем место встречи
     app->setDescription("Secret holiday party at secret place. Everybody is welcome!"); //Описание встречи
     cal->insertAppointment(app); //Добавляем встречу к календарю
@@ -79,7 +79,7 @@ void QuickCalendarWindow::generateData()
     app->setDateTimes(QDateTime(QDate(2008,12,24),QTime(12,0,0)),
                      QDateTime(QDate(2008,12,24),QTime(23,59,0)));//Период события
 
-    app->setSubject("Christmas party!"); //Устанвливем субъект встречи
+    app->setSubject("Christmas party!"); //Устанавливаем субъект встречи
     app->setPlace("Everywhere"); //Устанавливаем место встречи
     app->setDescription("Everybody is welcome!"); //Описание встречи
     cal->insertAppointment(app); //Добавляем встречу к календарю
@@ -87,7 +87,7 @@ void QuickCalendarWindow::generateData()
     // Work Calendar
 
     cal = new Calendar(1);//Создаем 1ый календарь
-    cal->setName("Work Calendar");//Устанвливаем его имя
+    cal->setName("Work Calendar");//Устанавливаем его имя
     cal->setColor(myColors.at(1));//Устанавливаем его цвет
     cal->setSelected(false);//Устанавливаем статус выделения
     myCalendars.append(cal);//Добавляем его к списку календарей
@@ -95,7 +95,7 @@ void QuickCalendarWindow::generateData()
     app = new Appointment(); //Создаем новую встречу
     app->setDateTimes(QDateTime(QDate(2008,12,22),QTime(9,0,0)),
                      QDateTime(QDate(2008,12,22),QTime(11,00,0)));//Период события
-    app->setSubject("Meeting"); //Устанвливем субъект встречи
+    app->setSubject("Meeting"); //Устанавливаем субъект встречи
     app->setPlace("Somewhere"); //Устанавливаем место встречи
     app->setDescription("Remember this meeting!"); //Описание встречи
     cal->insertAppointment(app); //Добавляем встречу к календарю
@@ -103,7 +103,7 @@ void QuickCalendarWindow::generateData()
     app = new Appointment(); //Создаем новую встречу
     app->setDateTimes(QDateTime(QDate(2008,12,22),QTime(11,00,0)),
                      QDateTime(QDate(2008,12,22),QTime(12,30,0))); //Период события
-    app->setSubject("Lunch with Boss"); //Устанвливем субъект встречи
+    app->setSubject("Lunch with Boss"); //Устанавливаем субъект встречи
     app->setPlace("Hilton"); //Устанавливаем место встречи
     app->setDescription("Good food."); //Описание встречи
     cal->insertAppointment(app); //Добавляем встречу к календарю
@@ -117,7 +117,7 @@ void QuickCalendarWindow::generateData()
     // QuickCalendar
 
     cal = new Calendar(2); //Создаем 2ой календарь
-    cal->setName("QuickCalendar"); //Устанвливаем его имя
+    cal->setName("QuickCalendar"); //Устанавливаем его имя
     cal->setColor(myColors.at(2)); //Устанавливаем его цвет
     cal->setSelected(false); //Устанавливаем статус выделения
     myCalendars.append(cal); //Добавляем его к списку календарей
@@ -226,7 +226,7 @@ void QuickCalendarWindow::startUp()
             this, //главное окно
             SLOT(modeChanged(int))); //слот смены режима
 
-	//Связываем сигналы объектов действий с соответствующми слотами
+	//Связываем сигналы объектов действий с соответствующими слотами
 	connect(monthAction, SIGNAL(triggered()),
             ptrSelectorWidget, SLOT(showMonthBased()));
     connect(weekAction, SIGNAL(triggered()),
@@ -260,7 +260,7 @@ void QuickCalendarWindow::createDockWidgets()
 	ptrTableView->setSelectionMode(QAbstractItemView::NoSelection); 
     ptrTableView->horizontalHeader()->hide(); //Скрываем заголовки столбцов
     ptrTableView->verticalHeader()->hide(); //Скрываем заголовки строк
-    ptrTableView->resizeColumnsToContents(); //Устанваливаем ширину ячеек по содержимому
+    ptrTableView->resizeColumnsToContents(); //Устанавливаем ширину ячеек по содержимому
 	
     QVBoxLayout *layout = new QVBoxLayout(); //Создаем менеджер вертикального выравнивания
     layout->setMargin(0); //Устанавливаем отступ

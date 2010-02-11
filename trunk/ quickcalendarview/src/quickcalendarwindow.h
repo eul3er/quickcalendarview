@@ -75,7 +75,7 @@ protected:
     void createDockWidgets(); ///<Метод создает плавающий список календарей
 
 private slots: 
-    void onExit(); ///<Слот, вызываемый при закрытии выдижета
+    void onExit(); ///<Слот, вызываемый при закрытии виджета
 	///Слот изменения списка выбранных календарей
     void dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
     void modeChanged(int mode); //<Слот изменения режима
